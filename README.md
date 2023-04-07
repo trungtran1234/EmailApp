@@ -1,4 +1,4 @@
-# Sigma Mail (Smai)
+# Sigma Mail (Smail)
 - Name Tri Nguyen
 - Name Jasper Nguyen
 - Name Kevin Aquino
