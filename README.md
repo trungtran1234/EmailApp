@@ -1,5 +1,5 @@
-# Project Name
-- Name (@username)
-- Name (@username)
-- Name (@username)
-- Name (@username)
+# Sigma Mail (Smai)
+- Name Tri Nguyen
+- Name Jasper Nguyen
+- Name Kevin Aquino
+- Name Trung Tran
