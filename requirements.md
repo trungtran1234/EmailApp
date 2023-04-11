@@ -54,7 +54,7 @@
 2. Use Case Name (Should match functional requirement name)
    Name: Sort messages based on date
 Summary: The user can sort the emails from oldest to newest or newest to oldest
-Actors: The use that is trying to sort their email by date
+Actors: User
 Pre-conditions: The user must be logged in
 Trigger: Click the sort button and select by date
 Primary Sequence:
@@ -70,7 +70,7 @@ Message saying “No message available to sort”
 
 Name: Search messages
 Summary: The use can enter keywords to look for a specific email that contains these keywords
-Actors: The use that is trying to search for a specific message
+Actors: User
 Pre-conditions: The user must be logged in
 Trigger: Selecting the search bar and type in specific keywords of what you are searching for
 Primary Sequence:  
