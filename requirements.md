@@ -66,7 +66,7 @@ indicating that the request has already been sent.
 - **Post Condition:**
 	The user is able to mark a task as complete, and delete a task
 	
-Name: Delete messages inside of trash permanently
+Name: Delete messages inside of trash permanently (Jasper)
 Summary: The use can go into the trash section and choose to permanently delete an email 
 Actors: Users
 Pre-conditions: The user must be on the trash section
@@ -82,7 +82,7 @@ Alternative Sequence: There are no emails in the trash
 
 
 
-Name: Search messages
+Name: Search messages (Jasper)
 Summary: The use can enter keywords to look for a specific email that contains these keywords
 Actors: User
 Pre-conditions: The user must be logged in
