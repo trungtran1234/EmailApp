@@ -134,7 +134,7 @@ Post-Conditions:
 1. Message will appear in the recipient's inbox
 2. Message will appear in sent messages folder
 	
-Name: Register an account
+Name: Register an account (Trung)
 Summary: A user on the website can register for an account to use its application
 Actors: The user registering for the website
 Pre-conditions: The user must be on the website and not already logged in
@@ -149,7 +149,7 @@ Alternative Sequence:
 3. If either the email, username, or password is left empty, the system outputs an error message that prompts the user to fill out all the fields.
 Post Condition: The user made the new account and can log in, or the user fails to make the new account and can’t log in.
 	
-Name: Remove friend
+Name: Remove friend (Trung)
 Summary: A user on the website can remove a friend that they have added
 Actors: The user trying to remove a friend
 Pre-conditions: The user must be on the website and logged in
