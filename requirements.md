@@ -1,26 +1,22 @@
-## <remove all of the example text and notes in < > such as this one>
-
 ## Functional Requirements
 
-1. requirement
-2. requirement
-3. requirement
-4. requirement
-5. requirement
-6. requirement
-7. requirement
-8. requirement
-9. requirement
-10. requirement
-11. requirement
-12. requirement
+1. Restore deleted messages 
+2. Delete messages 
+3. Bookmarking/archive messages - Kevin
+4. Compose messages - Kevin
+5. Create an account - Trung
+6. View incoming mesesages - Jasper
+7. View sent messages 
+8. View deleted messages
+9. Advance search items with filters - Trung
+10. Manage tasks in to-do component -  Tri Nguyen
+11. Search messages - Jasper
+12. Add Friend - Tri Nguyen
 
 ## Non-functional Requirements
 
-1. non-functional
-2. non-functional
-3. non-functional
-4. non-functional
+1. Multilingual
+2. Work on all browsers
 
 ## Use Cases
 
