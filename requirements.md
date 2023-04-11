@@ -129,3 +129,34 @@ Alternative Sequence:
 Post-Conditions:
 1. Message will appear in the recipient's inbox
 2. Message will appear in sent messages folder
+	
+Name: Register an account
+Summary: A user on the website can register for an account to use its application
+Actors: The user registering for the website
+Pre-conditions: The user must be on the website and not already logged in
+Trigger: Click the “Create account” button
+Primary Sequence: 
+1. The user fills out the email, password, and username on the registration form
+2. The user click “Register” to send in the registration
+3. The system makes the account and automatically log the user in with their new account
+Alternative Sequence:
+1. If the email already has an account, the system outputs an error message that prompts the user to enter a valid email address.
+2. If the username is taken, the system outputs an error message that prompts the user to try a different username.
+3. If either the email, username, or password is left empty, the system outputs an error message that prompts the user to fill out all the fields.
+Post Condition: The user made the new account and can log in, or the user fails to make the new account and can’t log in.
+	
+Name: Remove friend
+Summary: A user on the website can remove a friend that they have added
+Actors: The user trying to remove a friend
+Pre-conditions: The user must be on the website and logged in
+Trigger: Click the “Friends” button to go to their friends tab
+Primary Sequence:
+1. The user selects the friend they want to remove by clicking on their profile
+2. The user clicks “Remove Friend” button displayed on the screen
+3. The system displays “Confirm” and “Cancel” button on the screen
+4. The user clicks “Confirm” button displayed on the screen to remove the friend
+Alternate Sequence:
+1. The user selects “Cancel” instead of “Confirm”, then the prompted buttons disappear and the friend is not removed yet.
+2. The user have no friend in their friends list so the user is unable to remove any friend.
+Post Condition: The user removed the friend and that friend is no longer in their friend list, or the user cancelled the removal and the friend is still in their friend list.
+
