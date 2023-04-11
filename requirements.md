@@ -61,19 +61,20 @@ indicating that the request has already been sent.
 	If the user does not have any to-do tasks, the system prompts message the user has no tasks.
 - **Post Condition:**
 	The user is able to mark a task as complete, and delete a task
-3. Sort messages based on date
-Summary: The user can sort the emails from oldest to newest or newest to oldest
-Actors: User
-Pre-conditions: The user must be logged in
-Trigger: Click the sort button and select by date
-Primary Sequence:
-User clicks the sort button
-Options show up asking what kind of sorting is wanted
-User selects the sort by date(oldest to newest)
-Alternative Sequence:  There are no emails available to be sorted
-Message saying “No message available to sort”
-	Post-Condition: The emails are now sorted from oldest to newest or There are no emails that were ever 
-sent to the user so a “No  message available to sort” appears.
+Name: Delete messages inside of trash permanently
+Summary: The use can go into the trash section and choose to permanently delete an email 
+Actors: Users
+Pre-conditions: The user must be on the trash section
+Trigger: selecting delete permanently on the email
+Primary Sequence:  
+Right click on the email that is getting deleted
+Click the delete button
+Press the confirm button
+Alternative Sequence: There are no emails in the trash
+	Post-Condition: The email is now gone after being successfully deleted
+				OR
+		                 There was no email in the trash to begin with
+
 
 
 Name: Search messages
