@@ -11,7 +11,7 @@ User should be able to:
 8. View sent messages - Kevin
 9. Remove Friend - Tri Nguyen
 10. Create to-do list -  Tri Nguyen
-11.Search messages - Jasper
+11. Search messages - Jasper
 12. Add Friend - Tri Nguyen
 
 
@@ -49,6 +49,8 @@ rejects the friend request
 user to enter a valid name or email address.
   	2. If a friend request has already been sent to the selected friend, the system displays a message 
 indicating that the request has already been sent.
+	
+	
 1.  To-do component(Tri Nguyen)
 -**Sumamry:** The user can create a to-do list
 - **Actor(s):**
