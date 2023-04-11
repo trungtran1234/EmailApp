@@ -69,15 +69,15 @@ Name: Delete messages inside of trash permanently
 Summary: The use can go into the trash section and choose to permanently delete an email 
 Actors: Users
 Pre-conditions: The user must be on the trash section
-Trigger: selecting delete permanently on the email
+Trigger: go to the trash section
 Primary Sequence:  
-1.Right click on the email that is getting deleted
-2.Click the delete button
-3.Press the confirm button
+Right click on the email that is getting deleted
+Click the delete button
+Press the confirm button
 Alternative Sequence: There are no emails in the trash
-Post-Condition: The email is now gone after being successfully deleted
-OR
-There was no email in the trash to begin with
+	Post-Condition: The email is now gone after being successfully deleted
+				OR
+		                 There was no email in the trash to begin with
 
 
 
