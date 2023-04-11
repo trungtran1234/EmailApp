@@ -1,5 +1,5 @@
 # Sigma Mail (Smail)
-- Name Tri Nguyen
-- Name Jasper Nguyen
-- Name Kevin Aquino
-- Name Trung Tran
+- Tri Nguyen - ngtri1809
+- Jasper Nguyen - jasper-nguyen
+- Kevin Aquino - Fireality
+- Trung Tran - trungtran1234
