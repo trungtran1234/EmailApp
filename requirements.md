@@ -17,8 +17,9 @@ User should be able to:
 
 ## Non-functional Requirements
 
-1. Messages should have font Arial in size 12
-2. Compatible with Google Chrome, Safari, Microsoft Edge, Opera, and Firefox
+1. Messages should have font Arial in size 12 - Kevin
+2. Compatible with Google Chrome, Safari, Microsoft Edge, Opera, and 
+Firefox - Jasper
 
 
 ## Use Cases
