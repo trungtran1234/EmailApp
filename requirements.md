@@ -69,7 +69,7 @@ indicating that the request has already been sent.
 Name: Delete messages inside of trash permanently (Jasper)
 Summary: The use can go into the trash section and choose to permanently delete an email 
 Actors: Users
-Pre-conditions: The user must be on the trash section
+Pre-conditions: User must be logged in
 Trigger: go to the trash section
 Primary Sequence:  
 Right click on the email that is getting deleted
