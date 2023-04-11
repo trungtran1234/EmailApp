@@ -100,7 +100,7 @@ Message saying “Not found” shows up
 message is displayed as there are no matches
 
 
-Name: Bookmarking messages
+Name: Bookmarking messages (Kevin)
 Summary: The user can click on an icon to bookmark messages in their inbox 
 Actors: User that is bookmarking the message
 Pre-conditions: User must be logged in, and have a message in their inbox 
@@ -116,7 +116,7 @@ Post-Conditions:
 OR
 2. Message will disappear from the folder when a user clicks on an already bookmarked message
 
-Name: Composing messages
+Name: Composing messages (Kevin)
 Summary: The user clicks on the "compose" button to create an email draft where they will enter text or files onto the textbox, and pick a recipient to send to 
 Actors: User creating the email
 Pre-conditions: User must be logged in, and in the inbox page
