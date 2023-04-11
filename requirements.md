@@ -1,22 +1,25 @@
 ## Functional Requirements
 
-1. Restore deleted messages 
-2. Delete messages 
-3. Bookmarking/archive messages - Kevin
-4. Compose messages - Kevin
-5. Create an account - Trung
-6. View incoming mesesages - Jasper
-7. View sent messages 
-8. View deleted messages
-9. Advance search items with filters - Trung
-10. Manage tasks in to-do component -  Tri Nguyen
-11. Search messages - Jasper
+User should be able to:
+1. Move messages to trash - Trung
+2. Recover trashed messages - Trung
+3. Delete trashed messages permanently - Jasper
+4. Bookmarking/archive messages - Kevin
+5. Compose messages - Kevin
+6. Create an account - Trung
+7. View incoming messages - Jasper
+8. View sent messages - Kevin
+9. Remove Friend - Tri Nguyen
+10. Create to-do list -  Tri Nguyen
+11.Search messages - Jasper
 12. Add Friend - Tri Nguyen
+
 
 ## Non-functional Requirements
 
-1. Multilingual
-2. Work on all browsers
+1. Messages should have font Arial in size 12
+2. Compatible with Google Chrome, Safari, Microsoft Edge, Opera, and Firefox
+
 
 ## Use Cases
 
