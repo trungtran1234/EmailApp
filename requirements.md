@@ -20,31 +20,28 @@
 
 ## Use Cases
 
-1. Use Case Name (Should match functional requirement name)
-- **Pre-condition:** <can be a list or short description> Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua.
-
+1. Add friend
+- **Actor(s):**
+	User
+- **Pre-condition:**
+	1. The user is logged in to their account on website
+	2. The user already enter the user name they want to add into the 
+search bar	
 - **Trigger:** <can be a list or short description> Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. 
-
+	User click "add friend" button
 - **Primary Sequence:**
-  
-  1. Ut enim ad minim veniam, quis nostrum e
-  2. Et sequi incidunt 
-  3. Quis aute iure reprehenderit
-  4. ... 
-  5. ...
-  6. ...
-  7. ...
-  8. ...
-  9. ...
-  10. <Try to stick to a max of 10 steps>
-
+	1.The system displays the friend's profile information, along with an "Add Friend" button
+	2. The user select "Add friend" button
+	3. The system sends a friend requets to the selected friend's email address
+	4. The system notifies the user that their friend request has been sent.
 - **Primary Postconditions:** <can be a list or short description> 
 
 - **Alternate Sequence:** <you can have more than one alternate sequence to describe multiple issues that may arise>
-  
-  1. Ut enim ad minim veniam, quis nostrum e
-  2. Ut enim ad minim veniam, quis nostrum e
-  3. ...
+ 
+  	1. If the entered name or email address is invalid, the system displays an error message and prompts the 
+user to enter a valid name or email address.
+  	2. If a friend request has already been sent to the selected friend, the system displays a message 
+indicating that the request has already been sent.
 
 - **Alternate Sequence <optional>:** <you can have more than one alternate sequence to describe multiple issues that may arise>
   
