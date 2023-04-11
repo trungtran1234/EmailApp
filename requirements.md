@@ -92,3 +92,36 @@ Message saying “Not found” shows up
 message is displayed as there are no matches
 
 
+Name: Bookmarking messages
+Summary: The user can click on an icon to bookmark messages in their inbox 
+Actors: User that is bookmarking the message
+Pre-conditions: User must be logged in, and have a message in their inbox 
+Trigger: Clicking on the bookmark icon
+Primary Sequence:
+2. User goes into their inbox
+3. User clicks the bookmark icon on the message they want to bookmark
+4. Message will appear on their bookmark folder
+Alternative Sequence:
+1. User clicks the bookmark icon on a message that is already bookmarked, then message is removed from the bookmark folder 
+Post-Conditions:
+1. Message appears in the bookmark folder, and the message will be marked
+OR
+2. Message will disappear from the folder when a user clicks on an already bookmarked message
+
+Name: Composing messages
+Summary: The user clicks on the "compose" button to create an email draft where they will enter text or files onto the textbox, and pick a recipient to send to 
+Actors: User creating the email
+Pre-conditions: User must be logged in, and in the inbox page
+Trigger: User clicks on the "compose" button
+Primary Sequence:
+1. User enters message in draft
+2. User types subject in subject line
+3. User enters the name or email address of user they want to send to.
+4. User clicks "Send"
+Alternative Sequence:
+1. If user clicks "Send" without entering a recipient, then message prompts user to enter a recipient
+2. If user clicks "Send" without sending a subject, then it will send a message with an empty subject line
+3. If user clicks "Send" without entering a message in the draft, then an empty message will be sent to the recipient
+Post-Conditions:
+1. Message will appear in the recipient's inbox
+2. Message will appear in sent messages folder
