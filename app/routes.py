@@ -14,8 +14,8 @@ def hello():
 
 @myapp_obj.route("/login")
 def login():
-    form = LoginForm()
-    return render_template('login.html', form=form)
+    current_form = LoginForm()
+    return render_template('login.html', title = 'Sign In', form = current_form)
 
 @myapp_obj.route("/members/<string:name>/")
 def getMember(name):
