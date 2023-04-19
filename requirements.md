@@ -11,7 +11,7 @@ User should be able to:
 8. View sent messages - Kevin
 9. Remove Friend - Tri Nguyen
 10. Create to-do list -  Tri Nguyen
-11.Search messages - Jasper
+11. Search messages - Jasper
 12. Add Friend - Tri Nguyen
 
 
@@ -49,6 +49,8 @@ rejects the friend request
 user to enter a valid name or email address.
   	2. If a friend request has already been sent to the selected friend, the system displays a message 
 indicating that the request has already been sent.
+	
+	
 1.  To-do component(Tri Nguyen)
 -**Sumamry:** The user can create a to-do list
 - **Actor(s):**
@@ -66,10 +68,10 @@ indicating that the request has already been sent.
 - **Post Condition:**
 	The user is able to mark a task as complete, and delete a task
 	
-Name: Delete messages inside of trash permanently
+Name: Delete messages inside of trash permanently (Jasper)
 Summary: The use can go into the trash section and choose to permanently delete an email 
 Actors: Users
-Pre-conditions: The user must be on the trash section
+Pre-conditions: User must be logged in
 Trigger: go to the trash section
 Primary Sequence:  
 Right click on the email that is getting deleted
@@ -82,7 +84,7 @@ Alternative Sequence: There are no emails in the trash
 
 
 
-Name: Search messages
+Name: Search messages (Jasper)
 Summary: The use can enter keywords to look for a specific email that contains these keywords
 Actors: User
 Pre-conditions: The user must be logged in
@@ -98,7 +100,7 @@ Message saying “Not found” shows up
 message is displayed as there are no matches
 
 
-Name: Bookmarking messages
+Name: Bookmarking messages (Kevin)
 Summary: The user can click on an icon to bookmark messages in their inbox 
 Actors: User that is bookmarking the message
 Pre-conditions: User must be logged in, and have a message in their inbox 
@@ -114,7 +116,7 @@ Post-Conditions:
 OR
 2. Message will disappear from the folder when a user clicks on an already bookmarked message
 
-Name: Composing messages
+Name: Composing messages (Kevin)
 Summary: The user clicks on the "compose" button to create an email draft where they will enter text or files onto the textbox, and pick a recipient to send to 
 Actors: User creating the email
 Pre-conditions: User must be logged in, and in the inbox page
@@ -132,7 +134,7 @@ Post-Conditions:
 1. Message will appear in the recipient's inbox
 2. Message will appear in sent messages folder
 	
-Name: Register an account
+Name: Register an account (Trung)
 Summary: A user on the website can register for an account to use its application
 Actors: The user registering for the website
 Pre-conditions: The user must be on the website and not already logged in
@@ -147,7 +149,7 @@ Alternative Sequence:
 3. If either the email, username, or password is left empty, the system outputs an error message that prompts the user to fill out all the fields.
 Post Condition: The user made the new account and can log in, or the user fails to make the new account and can’t log in.
 	
-Name: Remove friend
+Name: Remove friend (Trung)
 Summary: A user on the website can remove a friend that they have added
 Actors: The user trying to remove a friend
 Pre-conditions: The user must be on the website and logged in
