@@ -1,11 +1,13 @@
 from app import db
 from glob import escape
 from flask import flash, redirect, render_template, request, session, url_for
-from flask_login import login_user
+from flask_login import LoginManager, login_required, login_user
 
 from app.models import User
 from .forms import LoginForm, RegisterForm
 from app import myapp_obj
+
+
 
 @myapp_obj.route("/")
 @myapp_obj.route("/index.html")
@@ -19,12 +21,13 @@ def hello():
 @myapp_obj.route("/login", methods=['GET', 'POST'])
 def login():
     form = LoginForm()
-
+    
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user:
             if user.check_password(form.password.data):
-                return redirect(url_for('index'))
+                login_user(user)
+                return redirect(url_for('mainpage'))
         return '<h1>Invalid username or password</h1>'
     return render_template('login.html', form=form)
 
@@ -40,6 +43,7 @@ def register():
         return '<h1>Account created successfully</h1>'
     return render_template('register.html', form=form)
 
-@myapp_obj.route("/members/<string:name>/")
-def getMember(name):
-    return escape(name)
+@myapp_obj.route("/mainpage", methods=['GET', 'POST'])
+@login_required
+def mainpage():
+    return render_template('mainpage.html')
