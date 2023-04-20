@@ -22,6 +22,7 @@ def hello():
 def login():
     form = LoginForm()
     error = None
+    
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user:
@@ -43,7 +44,7 @@ def register():
         new_account.set_password(form.password.data)
         db.session.add(new_account)
         db.session.commit()
-        return '<h1>Account created successfully</h1>'
+        return render_template('registered.html', name=new_account.username)
     return render_template('register.html', form=form)
 
 @myapp_obj.route("/mainpage", methods=['GET', 'POST'])
