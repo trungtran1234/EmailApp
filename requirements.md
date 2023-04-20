@@ -2,8 +2,8 @@
 
 User should be able to:
 1. 
-2. 
-3. 
+2. Changing password
+3. Undo sent messages
 4. Bookmarking messages - Kevin
 5. Compose messages - Kevin
 6. Create an account - Trung
@@ -44,7 +44,7 @@ indicating that the request has already been sent.
 - Postconditions:
 The user's friend list is updated to if the friend accept the request or notifies the user if the friend rejects the friend request	
 	
-	
+
 - Name: Edit To-do component(Tri Nguyen)
 - Sumamry: The user can create a to-do list
 - Actor(s): User
