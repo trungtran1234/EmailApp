@@ -1,3 +1,4 @@
+from sqlalchemy import or_
 from app import db
 from glob import escape
 from flask import flash, redirect, render_template, request, session, url_for
@@ -38,8 +39,17 @@ def login():
 @myapp_obj.route("/register", methods=['GET', 'POST'])
 def register():
     form = RegisterForm()
-
+    error = None
     if form.validate_on_submit():
+        existing_user = User.query.filter(or_(User.username==form.username.data, User.email==form.email.data)).first()
+        if existing_user:
+            if existing_user.username == form.username.data and existing_user.email != form.email.data:
+                error = 'This username is already taken. Please choose a different one.'
+            if existing_user.email == form.email.data and existing_user.username != form.username.data:
+                error = 'This email is already taken. Please choose a different one.'
+            if existing_user.email == form.email.data and existing_user.username == form.username.data:
+                error = 'This username and email is already taken. Please choose a different ones.'
+            return render_template('register.html', form=form, error=error)
         new_account = User(username=form.username.data, email = form.email.data)
         new_account.set_password(form.password.data)
         db.session.add(new_account)
