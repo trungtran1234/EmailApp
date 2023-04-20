@@ -1,7 +1,7 @@
 from app import db
 from glob import escape
 from flask import flash, redirect, render_template, request, session, url_for
-from flask_login import LoginManager, login_required, login_user
+from flask_login import LoginManager, login_required, login_user, logout_user
 
 from app.models import User
 from .forms import LoginForm, RegisterForm
@@ -47,3 +47,9 @@ def register():
 @login_required
 def mainpage():
     return render_template('mainpage.html')
+
+@myapp_obj.route("/logout", methods=['GET', 'POST'])
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
