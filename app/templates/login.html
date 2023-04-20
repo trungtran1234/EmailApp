@@ -8,5 +8,10 @@
       <p> {{form.password.label}} <br>
          {{form.password(size=32)}}</p>
 
+      {% if error %}
+         <p>{{ error }}</p>
+     {% endif %}
+
+
       <p>{{form.submit()}}</p>
    </form>

@@ -21,15 +21,18 @@ def hello():
 @myapp_obj.route("/login", methods=['GET', 'POST'])
 def login():
     form = LoginForm()
-    
+    error = None
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user:
             if user.check_password(form.password.data):
                 login_user(user)
                 return redirect(url_for('mainpage'))
-        return '<h1>Invalid username or password</h1>'
-    return render_template('login.html', form=form)
+            else:
+                error = 'Invalid username or password. Please try again.'
+        else: 
+            error = 'Invalid username or password. Please try again.'
+    return render_template('login.html', form=form, error=error)
 
 @myapp_obj.route("/register", methods=['GET', 'POST'])
 def register():
