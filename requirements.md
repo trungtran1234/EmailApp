@@ -5,7 +5,7 @@ User should be able to:
 2. Changing password
 3. Undo sent messages
 4. Bookmarking messages - Kevin
-5. Compose messages - Kevin
+5. Compose messages - Trung
 6. Create an account - Trung
 7. Edit profile page
 8. Sort by date - Jasper
