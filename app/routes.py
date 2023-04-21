@@ -25,6 +25,7 @@ def login():
     error = None
     
     if form.validate_on_submit():
+        print(f'username: {form.username.data} and password: {form.password.data}')
         user = User.query.filter_by(username=form.username.data).first()
         if user:
             if user.check_password(form.password.data):
