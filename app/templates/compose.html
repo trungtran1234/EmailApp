@@ -10,6 +10,7 @@
             <span class="invalid-feedback">{{ error }}</span>
         {% endfor %}
     </div>
+    <br>
     <div class="form-group">
         {{ form.subject.label }}
         {{ form.subject(class="form-control") }}
@@ -17,6 +18,7 @@
             <span class="invalid-feedback">{{ error }}</span>
         {% endfor %}
     </div>
+    <br>
     <div class="form-group">
         {{ form.body.label }}
         {{ form.body(class="form-control") }}
@@ -24,6 +26,7 @@
             <span class="invalid-feedback">{{ error }}</span>
         {% endfor %}
     </div>
+    <br>
     {% if error %}
          <p>{{ error }}</p>
      {% endif %}

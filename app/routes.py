@@ -104,3 +104,8 @@ def message(message_id):
     message = Message.query.get(message_id)
     return render_template('message.html', message=message)
 
+@myapp_obj.route('/sent')
+@login_required
+def sent():
+    messages = Message.query.filter_by(sender=current_user).order_by(Message.timestamp.desc()).all()
+    return render_template('sent.html', messages=messages)
