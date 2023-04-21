@@ -27,6 +27,7 @@
                     <td>From: {{ message.sender.username }}</td>
                     <br>
                     <td>{{ message.subject }}</td>
+                    <br>
                     <td><a href="{{ url_for('message', message_id=message.id) }}">View Message</a></td>
                     <br>
                     <br>
