@@ -2,12 +2,12 @@
 
 User should be able to:
 1. 
-2. Edit profile page
-3. Changing password
-4. Undo sent messages
-5. Bookmarking messages - Kevin
-6. Compose messages - Trung
-7. Create an account - Trung
+2. Changing password - Kevin
+3. Undo sent messages
+4. Bookmarking messages - Kevin
+5. Compose messages - Trung
+6. Create an account - Trung
+7. Edit profile page
 8. Sort by date - Jasper
 9. Remove Friend - Tri Nguyen
 10. Create to-do list -  Tri Nguyen
