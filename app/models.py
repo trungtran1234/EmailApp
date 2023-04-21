@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 #Database model
+=======
+from datetime import datetime
+import pytz
+>>>>>>> 8a9b17c329cc9bec5d4716fb8761c3324bcbbcaa
 from flask_login import LoginManager, UserMixin
 from app import db, login_manager
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -19,7 +24,21 @@ class User(db.Model, UserMixin):
     #each function inside of a database has to have self parameter
     def __repr__(self):
         return f'<user {self.id}: {self.username}>'
+    
+    def received_messages(self):
+        return Message.query.filter_by(recipient=self).order_by(Message.timestamp.desc()).all()
 
+class Message(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    sender_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    recipient_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    subject = db.Column(db.String(100), nullable=False)
+    body = db.Column(db.String(500), nullable=False)
+    timestamp = db.Column(db.DateTime, default=datetime.now(pytz.timezone('US/Pacific')))
+
+    sender = db.relationship('User', foreign_keys=[sender_id])
+    recipient = db.relationship('User', foreign_keys=[recipient_id])
+    
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))

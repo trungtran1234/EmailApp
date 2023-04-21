@@ -11,12 +11,12 @@
   
 ## Meetings
 
-### 2022-04-15 at 16:30
+### 2022-04-15 at 4:30pm
 <meeting template would go here>
 <only fill in template once you had the meeting>
 
 
-### 2022-04-22 at 16:30
+### 2022-04-22 at 4:30pm
 <meeting template would go here>
 <only fill in template once you had the meeting>
 - Attendance: Tri, Kevin, Jasper, Trung
@@ -24,7 +24,7 @@
    - Kevin is implementing composing message, Trung is implementing create 
 account, Jasper is implementing search mesages, and Tri is working on remove friend
 
- ### 2022-04-29 at 16:30
+ ### 2022-04-29 at 4:30pm
 - Who attended the meeting
 - Team updates (15min or less)
   <Each team member gives an update of what they did from the last meeting and what they plan to do next. If they are stuck, bring it up here to see if others can help.>

@@ -3,8 +3,33 @@
         <title>"Sigma Mail"</title>
     </head>
     <body>
-        <p>Welcome to S-Mail</p>
-        <a href="{{ url_for('logout') }}" class="btn btn-primary">Logout</a>
-        <a href="{{ url_for('settings') }}" class="btn btn-primary">Settings</a>
-    </body>
-</html>
+        <h1>Welcome to S-Mail, {{ name }}</h1>
+        <form action="{{ url_for('logout') }}" method="post">
+            <button type="submit">Logout</button>
+        </form>
+        <form action="{{ url_for('settings') }}">
+            <button type="submit">Settings</button>
+        </form>
+        <form action="{{ url_for('sent') }}">
+            <button type="submit">View sent messages</button>
+        </form>
+        <br>
+        <form action="{{ url_for('compose') }}" method="post">
+            <button type="submit">Compose message</button>
+        </form>
+        <br>
+        <br>
+        <h2>Inbox</h2>
+        <br>
+        <tbody>
+            {% for message in messages %}
+                <tr>
+                    <td>From: {{ message.sender.username }}</td>
+                    <br>
+                    <td>{{ message.subject }}</td>
+                    <td><a href="{{ url_for('message', message_id=message.id) }}">View Message</a></td>
+                    <br>
+                    <br>
+                </tr>
+            {% endfor %}
+        </tbody>

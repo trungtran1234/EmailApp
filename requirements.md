@@ -2,7 +2,7 @@
 
 User should be able to:
 1. 
-2. Changing password
+2. Changing password - Kevin
 3. Undo sent messages
 4. Bookmarking messages - Kevin
 5. Compose messages - Trung

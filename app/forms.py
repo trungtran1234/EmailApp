@@ -1,6 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, ValidationError
 from wtforms.validators import DataRequired
+
+from app.models import User
 
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
@@ -12,3 +14,14 @@ class RegisterForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Create Account')
+
+class ComposeForm(FlaskForm):
+    recipient = StringField('Recipient', validators=[DataRequired()])
+    subject = StringField('Subject', validators=[DataRequired()])
+    body = TextAreaField('Message', validators=[DataRequired()])
+    submit = SubmitField('Send')
+
+    def validate_recipient(self, recipient):
+        user = User.query.filter_by(username=recipient.data).first()
+        if not user:
+            raise ValidationError('User does not exist')
