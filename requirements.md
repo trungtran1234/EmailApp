@@ -93,8 +93,21 @@ Message appears in the bookmark folder, and the message will be marked
 OR
 Message will disappear from the folder when a user clicks on an already bookmarked message
 
+-Name: Changing password (Kevin)
+-Summary: The user can change their password through the settings page
+-Actors: User that is changing their password
+-Pre-Conditions: User must be logged in their account and in the settings page
+-Trigger: Clicking on the change password button in settings
+-Primary Sequence: 
+1. User inputs their new password
+2. Clicks on button to confirm their changes
+3. User is taken back to their inbox
+-Alternative Sequence: 
+If the user enters the same password as their previous one, then error "Try new password" will appear
+-Post-Conditon:
+User will have a new password in their account, and won't be able to use their previous one to login
 
-- Name: Composing messages (Kevin)
+- Name: Composing messages (Trung)
 - Summary: The user clicks on the "compose" button to create an email draft where they will enter text or files onto the textbox, and pick a recipient to send to 
 - Actors: User creating the email
 - Pre-conditions: User must be logged in, and in the inbox page
