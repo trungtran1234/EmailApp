@@ -101,7 +101,7 @@ def compose():
         db.session.add(message) #puts message into database
         db.session.commit() #commit the changes
         return redirect(url_for('mainpage')) #go back to main page
-    return render_template('compose.html', form=form) #stay on compose page (failed composing)
+    return render_template('compose.html', form=form, error=error) #stay on compose page (failed composing)
 
 #view received messages
 @myapp_obj.route('/message/<int:message_id>')

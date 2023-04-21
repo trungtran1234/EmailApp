@@ -8,7 +8,7 @@
         <br>
         {{ form.recipient(class="form-control") }}
         {% for error in form.recipient.errors %}
-            <span class="invalid-feedback">{{ error }}</span>
+            <span>{{ error }}</span>
         {% endfor %}
     </div>
     <br>
@@ -16,17 +16,13 @@
         {{ form.subject.label }}
         <br>
         {{ form.subject(class="form-control") }}
-        {% for error in form.subject.errors %}
-            <span class="invalid-feedback">{{ error }}</span>
-        {% endfor %}
+        
     </div>
     <br>
     <div class="form-group">
         
         {{ form.body(class="form-control") }}
-        {% for error in form.body.errors %}
-            <span class="invalid-feedback">{{ error }}</span>
-        {% endfor %}
+        
     </div>
     <br>
     {% if error %}
