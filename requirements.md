@@ -1,25 +1,25 @@
 ## Functional Requirements
 
 User should be able to:
-1. 
-2. Changing password - Kevin
-3. Undo sent messages
-4. Bookmarking messages - Kevin
+1. Changing password - Kevin
+2. Undo sent messages - Kevin
+3. Bookmarking messages - Kevin
+4. Delete account - Trung
 5. Compose messages - Trung
 6. Create an account - Trung
-7. Edit profile page
+7. Edit profile page - Jasper
 8. Sort by date - Jasper
-9. Remove Friend - Tri Nguyen
-10. Create to-do list -  Tri Nguyen
-11. Search messages - Jasper
+9. Search messages - Jasper
+10. Remove Friend - Tri Nguyen
+11. Create to-do list - Tri Nguyen
 12. Add Friend - Tri Nguyen
 
 
 ## Non-functional Requirements
 
-1. Messages should have font Arial in size 12 - Kevin
+1. Messages should have font Arial in size 12
 2. Compatible with Google Chrome, Safari, Microsoft Edge, Opera, and 
-Firefox - Jasper
+Firefox
 
 
 ## Use Cases
@@ -93,19 +93,21 @@ Message appears in the bookmark folder, and the message will be marked
 OR
 Message will disappear from the folder when a user clicks on an already bookmarked message
 
--Name: Changing password (Kevin)
--Summary: The user can change their password through the settings page
--Actors: User that is changing their password
--Pre-Conditions: User must be logged in their account and in the settings page
--Trigger: Clicking on the change password button in settings
--Primary Sequence: 
+
+- Name: Changing password (Kevin)
+- Summary: The user can change their password through the settings page
+- Actors: User that is changing their password
+- Pre-Conditions: User must be logged in their account and in the settings page
+- Trigger: Clicking on the change password button in settings
+- Primary Sequence: 
 1. User inputs their new password
 2. Clicks on button to confirm their changes
 3. User is taken back to their inbox
--Alternative Sequence: 
+- Alternative Sequence: 
 If the user enters the same password as their previous one, then error "Try new password" will appear
--Post-Conditon:
-User will have a new password in their account, and won't be able to use their previous one to login
+- Post-Conditon:
+User will have a new password in their account, and won't be able to use their previous one to login or user failed to change their password
+
 
 - Name: Composing messages (Trung)
 - Summary: The user clicks on the "compose" button to create an email draft where they will enter text or files onto the textbox, and pick a recipient to send to 
