@@ -1,13 +1,12 @@
 from sqlalchemy import or_
 from app import db
 from glob import escape
-from flask import flash, redirect, render_template, url_for
+from flask import flash, redirect, render_template, request, url_for
 from flask_login import LoginManager, current_user, login_required, login_user, logout_user
 
-from app.models import User
-from .forms import LoginForm, RegisterForm
+from app.models import Message, User
+from .forms import ComposeForm, LoginForm, RegisterForm
 from app import myapp_obj
-
 
 
 @myapp_obj.route("/")
@@ -60,7 +59,8 @@ def register():
 @myapp_obj.route("/mainpage", methods=['GET', 'POST'])
 @login_required
 def mainpage():
-    return render_template('mainpage.html')
+    messages = current_user.received_messages()
+    return render_template('mainpage.html', messages=messages, name = current_user.username)
 
 @myapp_obj.route("/logout", methods=['GET', 'POST'])
 @login_required
@@ -80,4 +80,27 @@ def delete():
     db.session.commit()
     logout_user()
     return redirect(url_for('index'))
+
+@myapp_obj.route('/compose', methods=['GET', 'POST'])
+@login_required
+def compose():
+    form = ComposeForm()
+    error = None
+    if form.validate_on_submit():
+        the_recipient = User.query.filter_by(username=form.recipient.data).first()
+        if the_recipient is None:
+            error = "Invalid recipient"
+            render_template('compose.html', form=form, error=error)
+            
+        message = Message(sender=current_user, recipient=the_recipient, subject=form.subject.data, body=form.body.data)
+        db.session.add(message)
+        db.session.commit()
+        return redirect(url_for('mainpage'))
+    return render_template('compose.html', form=form)
+
+@myapp_obj.route('/message/<int:message_id>')
+@login_required
+def message(message_id):
+    message = Message.query.get(message_id)
+    return render_template('message.html', message=message)
 

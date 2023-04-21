@@ -1,0 +1,8 @@
+
+<button class="back-button" onclick="window.history.back()">Back</button>
+    <h1>Message</h1>
+    <p><strong>From:</strong> {{ message.sender.username }}</p>
+    <p><strong>Subject:</strong> {{ message.subject }}</p>
+    <p><strong>Body:</strong></p>
+    <p>{{ message.body }}</p>
+    <p><strong>Date:</strong> {{ message.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</p>
