@@ -4,6 +4,7 @@ from flask_login import LoginManager, UserMixin
 from app import db, login_manager
 from werkzeug.security import generate_password_hash, check_password_hash
 
+#User object
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(32), nullable=False)
@@ -22,6 +23,7 @@ class User(db.Model, UserMixin):
     def received_messages(self):
         return Message.query.filter_by(recipient=self).order_by(Message.timestamp.desc()).all()
 
+#Message object
 class Message(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     sender_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
