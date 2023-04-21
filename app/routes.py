@@ -1,8 +1,8 @@
 from sqlalchemy import or_
 from app import db
 from glob import escape
-from flask import flash, redirect, render_template, request, session, url_for
-from flask_login import LoginManager, login_required, login_user, logout_user
+from flask import flash, redirect, render_template, url_for
+from flask_login import LoginManager, current_user, login_required, login_user, logout_user
 
 from app.models import User
 from .forms import LoginForm, RegisterForm
@@ -67,3 +67,17 @@ def mainpage():
 def logout():
     logout_user()
     return redirect(url_for('login'))
+
+@myapp_obj.route("/settings")
+@login_required
+def settings():
+    return render_template('settings.html')
+
+@myapp_obj.route("/delete", methods=['POST'])
+@login_required
+def delete():
+    db.session.delete(current_user)
+    db.session.commit()
+    logout_user()
+    return redirect(url_for('index'))
+
