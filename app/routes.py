@@ -21,6 +21,19 @@ def login():
     error = None
     
     if form.validate_on_submit():
+<<<<<<< HEAD
+        print(f'username: {form.username.data} and password: {form.password.data}')
+        user = User.query.filter_by(username=form.username.data).first()
+        if user:
+            if user.check_password(form.password.data):
+                login_user(user)
+                return redirect(url_for('mainpage'))
+            else:
+                error = 'Invalid username or password. Please try again.'
+        else: 
+            error = 'Invalid username or password. Please try again.'
+    return render_template('login.html', form=form, error=error)
+=======
         user = User.query.filter_by(username=form.username.data).first() #finds user in database with inputted username
         if user:           # if user exists in database
             if user.check_password(form.password.data): #checks password
@@ -31,6 +44,7 @@ def login():
         else: # username doesn't exist
             error = 'Invalid username. Please try again.'
     return render_template('login.html', form=form, error=error) #stay on login page with error message prompted
+>>>>>>> 8a9b17c329cc9bec5d4716fb8761c3324bcbbcaa
 
 # register page
 @myapp_obj.route("/register", methods=['GET', 'POST'])
