@@ -7,6 +7,14 @@
         <form action="{{ url_for('logout') }}" method="post">
             <button type="submit">Logout</button>
         </form>
+        <div class="search">
+            <form action="#">
+                <input type="text"
+                    placeholder=" Search emails"
+                    name="search: ">
+                <button type="search">search</button>
+            </form>
+        </div>
         <form action="{{ url_for('settings') }}">
             <button type="submit">Settings</button>
         </form>
