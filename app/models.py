@@ -35,6 +35,11 @@ class Message(db.Model):
 
     sender = db.relationship('User', foreign_keys=[sender_id])
     recipient = db.relationship('User', foreign_keys=[recipient_id])
+
+class TodoItem(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    text = db.Column(db.String(200))
+    completed = db.Column(db.Boolean)
     
 @login_manager.user_loader
 def load_user(user_id):
