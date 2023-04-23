@@ -10,20 +10,30 @@
 
   
 ## Meetings
-
-### 2022-04-15 at 4:30pm
-<meeting template would go here>
-<only fill in template once you had the meeting>
-
-
-### 2022-04-22 at 4:30pm
+### 2022-04-18 at 4:30pm
 <meeting template would go here>
 <only fill in template once you had the meeting>
 - Attendance: Tri, Kevin, Jasper, Trung
 - Team updates:
-   - Kevin is implementing composing message, Trung is implementing create 
-account, Jasper is implementing search mesages, and Tri is working on remove friend
+   - Kevin is implementing changing password, Trung is 
+implementing composing message, Jasper is implementing search 
+mesages, and Tri is working on remove friend
 
+### 2022-04-22 at 10:30pm
+<meeting template would go here>
+<only fill in template once you had the meeting>
+- Attendance: Tri, Kevin, Jasper, Trung
+- Team updates:
+   - Kevin is implementing changing password, Trung is upgrading composing 
+message, Jasper is implementing search mesages, and Tri is working on debugging 
+the todo component
+- pair-programming (optional) (25 mins)
+  <- Pair program on one part of the project. Driver will be the person 
+responsible for$ Trung and Kevin
+
+- Summarize group progress: We completed login, compose, and create account 
+requirement.Working on search messages, changing password, and todo component
+comlet
  ### 2022-04-29 at 4:30pm
 - Who attended the meeting
 - Team updates (15min or less)
