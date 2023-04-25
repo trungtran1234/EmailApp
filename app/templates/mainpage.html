@@ -1,6 +1,7 @@
 <html>
     <head>
         <title>"Sigma Mail"</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='mainpage.css') }}">
     </head>
     <body>
         <h1>Welcome to S-Mail, {{ name }}</h1>
@@ -18,15 +19,16 @@
             <button type="submit">Compose message</button>
         </form>
         <br>
-        <br>
         <h2>Inbox</h2>
         <br>
         <tbody>
             {% for message in messages %}
                 <tr>
+                    <time>{{ message.timestamp.strftime('%Y-%m-%d %I:%M %p') }}</time>
+                    <br>
                     <td>From: {{ message.sender.username }}</td>
                     <br>
-                    <td>{{ message.subject }}</td>
+                    <td>Subject: {{ message.subject }}</td>
                     <br>
                     <td><a href="{{ url_for('message', message_id=message.id) }}">View Message</a></td>
                     <br>
