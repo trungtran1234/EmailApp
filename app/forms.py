@@ -20,8 +20,3 @@ class ComposeForm(FlaskForm):
     subject = StringField('Subject', validators=[DataRequired()])
     body = TextAreaField('Message', validators=[DataRequired()])
     submit = SubmitField('Send')
-
-    def validate_recipient(self, recipient):
-        user = User.query.filter_by(username=recipient.data).first()
-        if not user:
-            raise ValidationError('User does not exist')

@@ -94,7 +94,7 @@ def compose():
         the_recipient = User.query.filter_by(username=form.recipient.data).first() #finds inputted recipient from database
         if the_recipient is None: #if recipient doesn't exist in database
             error = "Invalid recipient"
-            render_template('compose.html', form=form, error=error) #stay on compose page but with error message prompted
+            return render_template('compose.html', form=form, error=error) #stay on compose page but with error message prompted
         
         #generate new Message object with inputted data from the user 
         message = Message(sender=current_user, recipient=the_recipient, subject=form.subject.data, body=form.body.data)
