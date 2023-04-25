@@ -11,6 +11,8 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(32), nullable=False)
     password = db.Column(db.String(32), nullable=False)
     email = db.Column(db.String(100), nullable=False)
+    #bug here
+    #friends = db.relationship('Friend', backref='user', lazy='dynamic')
 
     def set_password(self, password):
         self.password = generate_password_hash(password)
@@ -23,7 +25,16 @@ class User(db.Model, UserMixin):
     
     def received_messages(self):
         return Message.query.filter_by(recipient=self).order_by(Message.timestamp.desc()).all()
+class Friend(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    #bug here
+    #user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
+    def __repr__(self):
+        return f"Friend('{self.name}', '{self.email}')"
+    
 #Message object
 class Message(db.Model):
     id = db.Column(db.Integer, primary_key=True)

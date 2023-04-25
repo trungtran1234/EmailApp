@@ -25,3 +25,7 @@ class ComposeForm(FlaskForm):
         user = User.query.filter_by(username=recipient.data).first()
         if not user:
             raise ValidationError('User does not exist')
+        
+class AddFriendForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    submit = SubmitField('Add Friend')

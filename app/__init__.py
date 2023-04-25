@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 import os
 
 
@@ -15,7 +16,7 @@ myapp_obj.config.from_mapping(
 )
 
 db = SQLAlchemy(myapp_obj)
-
+migrate = Migrate(myapp_obj,db)
 login_manager = LoginManager()
 login_manager.init_app(myapp_obj)
 login_manager.login_view = 'login'

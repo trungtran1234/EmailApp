@@ -4,8 +4,8 @@ from glob import escape
 from flask import flash, redirect, render_template, request, url_for
 from flask_login import LoginManager, current_user, login_required, login_user, logout_user
 
-from app.models import Message, User, Todo
-from .forms import ComposeForm, LoginForm, RegisterForm
+from app.models import Message, User, Todo, Friend
+from .forms import ComposeForm, LoginForm, RegisterForm, AddFriendForm
 from app import myapp_obj
 
 # the front page of the website, uses "base.html" for the format
@@ -147,4 +147,39 @@ def delete_item(todo_id):
 def todo():
     todo_list = Todo.query.all()
     return render_template('todo.html', todo_list=todo_list)
+
+from sqlalchemy.exc import IntegrityError
+
+@myapp_obj.route('/add_friend', methods=['GET', 'POST'])
+def add_friend():
+    if request.method == 'POST':
+        name = request.form['name']
+        email = request.form['email']
+        friend = Friend(name=name, email=email)
+        db.session.add(friend)
+        try:
+            db.session.commit()
+            flash('Friend added successfully.')
+            return redirect(url_for('friend_list'))
+        except IntegrityError:
+            db.session.rollback()
+            flash('Friend with email {} already exists.'.format(email))
+            return redirect(url_for('friend_list'))
+    return render_template('add_friend.html')
+
+
+
+@myapp_obj.route('/delete_friend/<int:id>', methods=['POST'])
+def delete_friend(id):
+    friend = Friend.query.get_or_404(id)
+    db.session.delete(friend)
+    db.session.commit()
+    return redirect(url_for('friend_list'))
+
+@myapp_obj.route('/friend_list', methods=['GET','POST'])
+@login_required
+def friend_list():
+    friends = Friend.query.all()
+    return render_template('friend_list.html', friends=friends)
+
 
