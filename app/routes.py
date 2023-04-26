@@ -84,6 +84,22 @@ def delete():
     logout_user()
     return redirect(url_for('front')) #go back to front page
 
+#change password
+@myapp_obj.route("/changepassword", methods=['GET','POST']) 
+@login_required
+def changepassword():
+    form = ChangePasswordForm() 
+    if request.method == 'POST' and form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        if user and user.password == form.password.data:
+            user.password = form.new_password.data
+            db.session.commit()
+            flash('It worked!')
+            return redirect(url_for('home'))
+        else: 
+            flash('nope.')
+    return render_template('changepassword.html', form=form)
+
 #compose message page
 @myapp_obj.route('/compose', methods=['GET', 'POST'])
 @login_required
