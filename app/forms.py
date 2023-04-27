@@ -28,6 +28,6 @@ class ComposeForm(FlaskForm):
 
 class ChangePasswordForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
+    password = PasswordField('Current Password', validators=[DataRequired()])
     new_password = PasswordField('New Password', validators=[DataRequired()])
     submit = SubmitField('Change Password')

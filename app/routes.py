@@ -5,7 +5,7 @@ from flask import flash, redirect, render_template, request, url_for
 from flask_login import LoginManager, current_user, login_required, login_user, logout_user
 
 from app.models import Message, User, TodoItem
-from .forms import ComposeForm, LoginForm, RegisterForm
+from .forms import ComposeForm, LoginForm, RegisterForm, ChangePasswordForm
 from app import myapp_obj
 
 # the front page of the website, uses "base.html" for the format
@@ -84,18 +84,19 @@ def delete():
     logout_user()
     return redirect(url_for('front')) #go back to front page
 
+#request.method == 'POST' and 
 #change password
 @myapp_obj.route("/changepassword", methods=['GET','POST']) 
 @login_required
-def changepassword():
-    form = ChangePasswordForm() 
+def changepassword(): 
+    form = ChangePasswordForm()
     if request.method == 'POST' and form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user and user.password == form.password.data:
-            user.password = form.new_password.data
+            user.password.data = form.new_password
             db.session.commit()
             flash('It worked!')
-            return redirect(url_for('home'))
+            return redirect(url_for('mainpage'))
         else: 
             flash('nope.')
     return render_template('changepassword.html', form=form)
