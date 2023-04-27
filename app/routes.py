@@ -3,7 +3,7 @@ from app import db
 from glob import escape
 from flask import flash, redirect, render_template, request, url_for
 from flask_login import LoginManager, current_user, login_required, login_user, logout_user
-
+from werkzeug.security import generate_password_hash, check_password_hash
 from app.models import Message, User, TodoItem
 from .forms import ComposeForm, LoginForm, RegisterForm, ChangePasswordForm
 from app import myapp_obj
@@ -92,11 +92,11 @@ def changepassword():
     form = ChangePasswordForm()
     if request.method == 'POST' and form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
-        if user and user.password == form.password.data:
-            user.password.data = form.new_password
+        if user and check_password_hash(user.password, form.data):
+            user.password = generate_password_hash(form.new_password.data)
             db.session.commit()
             flash('It worked!')
-            return redirect(url_for('mainpage'))
+            return redirect(url_for('mainpage.html'))
         else: 
             flash('nope.')
     return render_template('changepassword.html', form=form)
