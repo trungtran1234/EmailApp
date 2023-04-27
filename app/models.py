@@ -36,6 +36,7 @@ class Message(db.Model):
 
     sender = db.relationship('User', foreign_keys=[sender_id])
     recipient = db.relationship('User', foreign_keys=[recipient_id])
+
     
 @login_manager.user_loader
 def load_user(user_id):

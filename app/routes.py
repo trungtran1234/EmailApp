@@ -117,3 +117,4 @@ def sent():
     #get the Message object sent by the user, orderd by time sent
     messages = Message.query.filter_by(sender=current_user).order_by(Message.timestamp.desc()).all()
     return render_template('sent.html', messages=messages) #renders the sent messsages page
+ 
