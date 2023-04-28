@@ -4,7 +4,7 @@ from glob import escape
 from flask import flash, redirect, render_template, request, url_for
 from flask_login import LoginManager, current_user, login_required, login_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
-from app.models import Message, User, Todo
+from app.models import Message, User, Todo, Friend
 from .forms import ComposeForm, LoginForm, RegisterForm, ChangePasswordForm
 from app import myapp_obj
 
@@ -75,15 +75,6 @@ def logout():
 def settings():
     return render_template('settings.html') #has delete account button (for now)
 
-#delete account button
-@myapp_obj.route("/delete", methods=['POST']) #only use POST method to change database, no need to "GET" something from database
-@login_required
-def delete():
-    db.session.delete(current_user) #delete user from database
-    db.session.commit() #commit the changes
-    logout_user()
-    return redirect(url_for('front')) #go back to front page
-
 #request.method == 'POST' and 
 #change password
 @myapp_obj.route("/changepassword", methods=['GET','POST']) 
@@ -153,6 +144,20 @@ def update(todo_id):
     db.session.commit()
     return redirect(url_for("todo"))
 
+@myapp_obj.route("/todo", methods=['POST','GET'])
+def todo():
+    todo_list = Todo.query.all()
+    return render_template('todo.html', todo_list=todo_list)
+
+#delete account button
+@myapp_obj.route("/delete", methods=['POST']) #only use POST method to change database, no need to "GET" something from database
+@login_required
+def delete():
+    db.session.delete(current_user) #delete user from database
+    db.session.commit() #commit the changes
+    logout_user()
+    return redirect(url_for('front')) #go back to front page
+
 @myapp_obj.route("/delete_item/<int:todo_id>", methods=['GET'])
 def delete_item(todo_id):
     todo_item = Todo.query.get(todo_id)
@@ -160,8 +165,36 @@ def delete_item(todo_id):
     db.session.commit()
     return redirect(url_for("todo"))
 
-@myapp_obj.route("/todo", methods=['POST','GET'])
-def todo():
-    todo_list = Todo.query.all()
-    return render_template('todo.html', todo_list=todo_list)
+from sqlalchemy.exc import IntegrityError
+
+@myapp_obj.route('/add_friend', methods=['GET', 'POST'])
+def add_friend():
+    if request.method == 'POST':
+        name = request.form['name']
+        email = request.form['email']
+        friend = Friend(name=name, email=email)
+        db.session.add(friend)
+        try:
+            db.session.commit()
+            flash('Friend added successfully.')
+            return redirect(url_for('friend_list'))
+        except IntegrityError:
+            db.session.rollback()
+            flash('Friend with email {} already exists.'.format(email))
+            return redirect(url_for('friend_list'))
+    return render_template('add_friend.html')
+
+@myapp_obj.route('/delete_friend/<int:id>', methods=['POST'])
+def delete_friend(id):
+    friend = Friend.query.get_or_404(id)
+    db.session.delete(friend)
+    db.session.commit()
+    return redirect(url_for('friend_list'))
+
+@myapp_obj.route('/friend_list', methods=['GET','POST'])
+@login_required
+def friend_list():
+    friends = Friend.query.all()
+    return render_template('friend_list.html', friends=friends)
+
 
