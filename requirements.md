@@ -24,7 +24,7 @@ Firefox
 
 ## Use Cases
 
-- Name: Add friend (Tri Nguyen)
+### Name: Add friend (Tri Nguyen)
 - Summary: User can add friend to their friend list
 - Actor(s):User
 - Pre-condition:
@@ -45,7 +45,7 @@ indicating that the request has already been sent.
 The user's friend list is updated to if the friend accept the request or notifies the user if the friend rejects the friend request	
 	
 
-- Name: Edit To-do component(Tri Nguyen)
+### Name: Edit To-do component(Tri Nguyen)
 - Sumamry: The user can create a to-do list
 - Actor(s): User
 - Pre-condition: The user is logged in to their account on website
@@ -60,7 +60,7 @@ If the user does not have any to-do tasks, the system prompts message the user h
 The user is able to mark a task as complete, and delete a task
 	
 
-- Name: Search messages (Jasper)
+### Name: Search messages (Jasper)
 - Summary: The use can enter keywords to look for a specific email that contains these keywords
 - Actors: User
 - Pre-conditions: The user must be logged in
@@ -77,7 +77,7 @@ Messages that have matching keywords from the search bar are displayed OR “Not
 message is displayed as there are no matches
 
 
-- Name: Bookmarking messages (Kevin)
+### Name: Bookmarking messages (Kevin)
 - Summary: The user can click on an icon to bookmark messages in their inbox 
 - Actors: User that is bookmarking the message
 - Pre-conditions: User must be logged in, and have a message in their inbox 
@@ -94,7 +94,7 @@ OR
 Message will disappear from the folder when a user clicks on an already bookmarked message
 
 
-- Name: Changing password (Kevin)
+### Name: Changing password (Kevin)
 - Summary: The user can change their password through the settings page
 - Actors: User that is changing their password
 - Pre-Conditions: User must be logged in their account and in the settings page
@@ -109,7 +109,7 @@ If the user enters the same password as their previous one, then error "Try new 
 User will have a new password in their account, and won't be able to use their previous one to login or user failed to change their password
 
 
-- Name: Composing messages (Trung)
+### Name: Composing messages (Trung)
 - Summary: The user clicks on the "compose" button to create an email draft where they will enter text or files onto the textbox, and pick a recipient to send to 
 - Actors: User creating the email
 - Pre-conditions: User must be logged in, and in the inbox page
@@ -128,7 +128,7 @@ User will have a new password in their account, and won't be able to use their p
 2. Message will appear in sent messages folder
 	
 
-- Name: Register an account (Trung)
+### Name: Register an account (Trung)
 - Summary: A user on the website can register for an account to use its application
 - Actors: The user registering for the website
 - Pre-conditions: The user must be on the website and not already logged in
@@ -145,7 +145,7 @@ User will have a new password in their account, and won't be able to use their p
 The user made the new account and can log in, or the user fails to make the new account and can’t log in.
 	
 
-- Name: Remove friend (Trung)
+### Name: Remove friend (Tri)
 - Summary: A user on the website can remove a friend that they have added
 - Actors: The user trying to remove a friend
 - Pre-conditions: The user must be on the website and logged in
