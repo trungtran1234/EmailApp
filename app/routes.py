@@ -90,12 +90,9 @@ def changepassword():
         user = User.query.filter_by(email=form.email.data).first() #checks if user's email matches
         if user: #if email is in db
             user.password = generate_password_hash(form.new_password.data) #Creates hash for new password and assigns it as the actual password
-            db.session.commit()
-            flash('It worked!')
-            return redirect(url_for('mainpage')) #take useer back to main page
-        else: 
-            flash('nope.')
-    return render_template('changepassword.html', form=form)
+            db.session.commit() #saves new password into database
+            return redirect(url_for('mainpage')) #take user back to main page
+    return render_template('changepassword.html', form=form) #if conditions not fulfilled then stay on page
 
 #compose message page
 @myapp_obj.route('/compose', methods=['GET', 'POST'])
