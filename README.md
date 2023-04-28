@@ -6,7 +6,7 @@
 - Trung Tran - trungtran1234
 
 ## Introduction
-Sigma Mail is a modern, web-based email application that allows users to manage their emails online. With features like inbox, compose, sent, trash, folders, search, and settings, this app makes it easy to stay on top of your email game. Built with pythone, html, and css, Sigma mail is a reliable and efficient way to manage your emails from anywhere with an internet connection.
+Sigma Mail is a modern, web-based email application that allows users to manage their emails online. With features like inbox, compose, sent, trash, folders, search, and settings, this app makes it easy to stay on top of your email game. Built with python, html, and css, Sigma mail is a reliable and efficient way to manage your emails from anywhere with an internet connection.
 
 ## How to use
 1. Create account: The user can create an account

@@ -29,20 +29,17 @@ Firefox
 - Actor(s):User
 - Pre-condition:
 1. The user is logged in to their account on website
-2. The user already enter the user name they want to add into the search bar	
-- Trigger: User click "add friend" button
+- Trigger: User click "Friend List" button
 - Primary Sequence:
-1. The system displays the friend's profile information, along with an "Add Friend" button
-2. The user select "Add friend" button
-3. The system sends a friend requets to the selected friend's email address
-4. The system notifies the user that their friend request has been sent.
+1. The system displays the search bar, along with an "Add Friend" button
+2. The user type in the username for of the friend they want to add
+3. The user select "Add friend" button
+4. The system sends a friend requets to the selected friend's email address
 - Alternate Sequence: 
-1. If the entered name or email address is invalid, the system displays an error message and prompts the 
-user to enter a valid name or email address.
-2. If a friend request has already been sent to the selected friend, the system displays a message 
-indicating that the request has already been sent.
+1. If the entered name or email address is invalid, the system displays an error message and prompts the user to enter a valid name or email address.
+2. If a friend request has already been sent to the selected friend, the system displays a message indicating that the request has already been sent.
 - Postconditions:
-The user's friend list is updated to if the friend accept the request or notifies the user if the friend rejects the friend request	
+The user's friend list is updated to if the friend accept the request 
 	
 
 ### Name: Edit To-do component(Tri Nguyen)
@@ -53,11 +50,11 @@ The user's friend list is updated to if the friend accept the request or notifie
 - Primary Sequence:
 1. The website open a to-do list that showed all the tasks the user has created, sorted in due date
 2. The user write down all the tasks
-3. The user set the due date
+3. The user click the "Add" button
 - Alternative sequencde:
 If the user does not have any to-do tasks, the system prompts message the user has no tasks.
 - Post Condition:
-The user is able to mark a task as complete, and delete a task
+The user is able to update a task as done or undone, and delete a task
 	
 
 ### Name: Search messages (Jasper)
