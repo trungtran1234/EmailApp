@@ -25,6 +25,12 @@ class ComposeForm(FlaskForm):
         user = User.query.filter_by(username=recipient.data).first()
         if not user:
             raise ValidationError('User does not exist')
+
+class ChangePasswordForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired()])
+    new_password = PasswordField('New Password', validators=[DataRequired()])
+    submit = SubmitField('Change Password')
+
         
 class AddFriendForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])

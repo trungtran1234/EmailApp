@@ -3,9 +3,9 @@ from app import db
 from glob import escape
 from flask import flash, redirect, render_template, request, url_for
 from flask_login import LoginManager, current_user, login_required, login_user, logout_user
-
+from werkzeug.security import generate_password_hash, check_password_hash
 from app.models import Message, User, Todo, Friend
-from .forms import ComposeForm, LoginForm, RegisterForm, AddFriendForm
+from .forms import ComposeForm, LoginForm, RegisterForm, ChangePasswordForm
 from app import myapp_obj
 
 # the front page of the website, uses "base.html" for the format
@@ -84,6 +84,23 @@ def delete():
     logout_user()
     return redirect(url_for('front')) #go back to front page
 
+#request.method == 'POST' and 
+#change password
+@myapp_obj.route("/changepassword", methods=['GET','POST']) 
+@login_required
+def changepassword(): 
+    form = ChangePasswordForm() #take ChangePasswordForm class in from forms.py
+    if request.method == 'POST' and form.validate_on_submit(): 
+        user = User.query.filter_by(email=form.email.data).first() #checks if user's email matches
+        if user: #if email is in db
+            user.password = generate_password_hash(form.new_password.data) #Creates hash for new password and assigns it as the actual password
+            db.session.commit()
+            flash('It worked!')
+            return redirect(url_for('mainpage')) #take useer back to main page
+        else: 
+            flash('nope.')
+    return render_template('changepassword.html', form=form)
+
 #compose message page
 @myapp_obj.route('/compose', methods=['GET', 'POST'])
 @login_required
@@ -136,17 +153,39 @@ def update(todo_id):
     db.session.commit()
     return redirect(url_for("todo"))
 
+@myapp_obj.route("/todo", methods=['POST','GET'])
+def todo():
+    todo_list = Todo.query.all()
+    return render_template('todo.html', todo_list=todo_list)
+
+#logout
+@myapp_obj.route("/logout", methods=['GET', 'POST'])
+@login_required
+def logout():
+    logout_user() #log user out
+    return redirect(url_for('login')) #go back to login page
+
+#settings page
+@myapp_obj.route("/settings")
+@login_required #
+def settings():
+    return render_template('settings.html') #has delete account button (for now)
+
+#delete account button
+@myapp_obj.route("/delete", methods=['POST']) #only use POST method to change database, no need to "GET" something from database
+@login_required
+def delete():
+    db.session.delete(current_user) #delete user from database
+    db.session.commit() #commit the changes
+    logout_user()
+    return redirect(url_for('front')) #go back to front page
+
 @myapp_obj.route("/delete_item/<int:todo_id>", methods=['GET'])
 def delete_item(todo_id):
     todo_item = Todo.query.get(todo_id)
     db.session.delete(todo_item)
     db.session.commit()
     return redirect(url_for("todo"))
-
-@myapp_obj.route("/todo", methods=['POST','GET'])
-def todo():
-    todo_list = Todo.query.all()
-    return render_template('todo.html', todo_list=todo_list)
 
 from sqlalchemy.exc import IntegrityError
 
@@ -166,8 +205,6 @@ def add_friend():
             flash('Friend with email {} already exists.'.format(email))
             return redirect(url_for('friend_list'))
     return render_template('add_friend.html')
-
-
 
 @myapp_obj.route('/delete_friend/<int:id>', methods=['POST'])
 def delete_friend(id):

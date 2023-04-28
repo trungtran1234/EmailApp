@@ -12,7 +12,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(32), nullable=False)
     email = db.Column(db.String(100), nullable=False)
     #bug here
-    #friends = db.relationship('Friend', backref='user', lazy='dynamic')
+    #friends = db.relationship('Friengit add', backref='user', lazy='dynamic')
 
     def set_password(self, password):
         self.password = generate_password_hash(password)
