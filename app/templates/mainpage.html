@@ -37,7 +37,8 @@
         <h2>Inbox</h2>
         <br>
         <tbody>
-            {% for message in messages %}
+            {%if sort_by == 'Descending'%}
+            {% for message in des %}
                 <tr>
                     <time>{{ message.timestamp.strftime('%Y-%m-%d %I:%M %p') }}</time>
                     <br>
@@ -50,4 +51,20 @@
                     <br>
                 </tr>
             {% endfor %}
+            {%else%}
+            {% for message in asc %}
+                <tr>
+                    <time>{{ message.timestamp.strftime('%Y-%m-%d %I:%M %p') }}</time>
+                    <br>
+                    <td>From: {{ message.sender.username }}</td>
+                    <br>
+                    <td>Subject: {{ message.subject }}</td>
+                    <br>
+                    <td><a href="{{ url_for('message', message_id=message.id) }}">View Message</a></td>
+                    <br>
+                    <br>
+                </tr>
+
+            {% endfor %}
+             {% endif %}
         </tbody>
