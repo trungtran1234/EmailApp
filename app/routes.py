@@ -3,10 +3,14 @@ from app import db
 from glob import escape
 from flask import flash, redirect, render_template, request, url_for
 from flask_login import LoginManager, current_user, login_required, login_user, logout_user
-from werkzeug.security import generate_password_hash, check_password_hash
-from app.models import Message, User, Todo
-from .forms import ComposeForm, LoginForm, RegisterForm, ChangePasswordForm
+
+from app.models import Message, User
+from .forms import ComposeForm, LoginForm, RegisterForm
 from app import myapp_obj
+
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
 
 # the front page of the website, uses "base.html" for the format
 # have login and create account buttons
@@ -58,9 +62,13 @@ def register():
 @myapp_obj.route("/mainpage", methods=['GET', 'POST'])
 @login_required #needs to be logged in to access this page
 def mainpage():
-    messages = current_user.received_messages() #get sent messages
+    asc = Message.query.filter_by(recipient=current_user).order_by(Message.timestamp.asc()).all()
+    des = Message.query.filter_by(recipient=current_user).order_by(Message.timestamp.desc()).all()
     #renders the main page with messages and name filled in as the parameter in mainpage.html
-    return render_template('mainpage.html', messages=messages, name = current_user.username)
+
+    sort_by = request.form.get("sort")
+
+    return render_template('mainpage.html', sort_by=sort_by, des=des, asc=asc,name=current_user.username)
 
 #logout
 @myapp_obj.route("/logout", methods=['GET', 'POST'])
@@ -83,23 +91,6 @@ def delete():
     db.session.commit() #commit the changes
     logout_user()
     return redirect(url_for('front')) #go back to front page
-
-#request.method == 'POST' and 
-#change password
-@myapp_obj.route("/changepassword", methods=['GET','POST']) 
-@login_required
-def changepassword(): 
-    form = ChangePasswordForm() #take ChangePasswordForm class in from forms.py
-    if request.method == 'POST' and form.validate_on_submit(): 
-        user = User.query.filter_by(email=form.email.data).first() #checks if user's email matches
-        if user: #if email is in db
-            user.password = generate_password_hash(form.new_password.data) #Creates hash for new password and assigns it as the actual password
-            db.session.commit()
-            flash('It worked!')
-            return redirect(url_for('mainpage')) #take useer back to main page
-        else: 
-            flash('nope.')
-    return render_template('changepassword.html', form=form)
 
 #compose message page
 @myapp_obj.route('/compose', methods=['GET', 'POST'])
@@ -135,33 +126,6 @@ def sent():
     messages = Message.query.filter_by(sender=current_user).order_by(Message.timestamp.desc()).all()
     return render_template('sent.html', messages=messages) #renders the sent messsages page
 
-#add task
-@login_required
-@myapp_obj.route('/add', methods=['POST'])
-def add():
-    name=request.form.get("name")
-    new_task=Todo(name=name,done=False)
-    db.session.add(new_task)
-    db.session.commit()
-    return redirect(url_for("todo"))
 
-@myapp_obj.route("/update/<int:todo_id>")
-@login_required
-def update(todo_id):
-    todo = Todo.query.get(todo_id)
-    todo.done=not todo.done
-    db.session.commit()
-    return redirect(url_for("todo"))
 
-@myapp_obj.route("/delete_item/<int:todo_id>", methods=['GET'])
-def delete_item(todo_id):
-    todo_item = Todo.query.get(todo_id)
-    db.session.delete(todo_item)
-    db.session.commit()
-    return redirect(url_for("todo"))
-
-@myapp_obj.route("/todo", methods=['POST','GET'])
-def todo():
-    todo_list = Todo.query.all()
-    return render_template('todo.html', todo_list=todo_list)
 
