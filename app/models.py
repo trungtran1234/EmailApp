@@ -1,5 +1,4 @@
 from datetime import datetime
-import pytz
 from flask_login import LoginManager, UserMixin
 from app import db, login_manager
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -32,11 +31,16 @@ class Message(db.Model):
     recipient_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     subject = db.Column(db.String(100), nullable=False)
     body = db.Column(db.String(500), nullable=False)
-    timestamp = db.Column(db.DateTime, default=datetime.now(pytz.timezone('US/Pacific')))
+    timestamp = db.Column(db.DateTime, default=datetime.now())
 
     sender = db.relationship('User', foreign_keys=[sender_id])
     recipient = db.relationship('User', foreign_keys=[recipient_id])
-    
+
+class Todo(db.Model):
+    task_id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100))
+    done = db.Column(db.Boolean)
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
