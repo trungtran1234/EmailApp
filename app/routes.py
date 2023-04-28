@@ -89,14 +89,14 @@ def delete():
 @myapp_obj.route("/changepassword", methods=['GET','POST']) 
 @login_required
 def changepassword(): 
-    form = ChangePasswordForm()
-    if request.method == 'POST' and form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
-        if user:
-            user.password = generate_password_hash(form.new_password.data)
+    form = ChangePasswordForm() #take ChangePasswordForm class in from forms.py
+    if request.method == 'POST' and form.validate_on_submit(): 
+        user = User.query.filter_by(email=form.email.data).first() #checks if user's email matches
+        if user: #if email is in db
+            user.password = generate_password_hash(form.new_password.data) #Creates hash for new password and assigns it as the actual password
             db.session.commit()
             flash('It worked!')
-            return redirect(url_for('mainpage'))
+            return redirect(url_for('mainpage')) #take useer back to main page
         else: 
             flash('nope.')
     return render_template('changepassword.html', form=form)
