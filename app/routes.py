@@ -92,12 +92,11 @@ def changepassword():
         user = User.query.filter_by(email=form.email.data).first() #checks if user's email matches
         if user: #if email is in db
             user.password = generate_password_hash(form.new_password.data) #Creates hash for new password and assigns it as the actual password
-            db.session.commit()
-            flash('It worked!')
+            db.session.commit() #saves new password into database
             return redirect(url_for('mainpage')) #take useer back to main page
         else: 
             flash('nope.')
-    return render_template('changepassword.html', form=form)
+    return render_template('changepassword.html', form=form) #if conditions not fulfilled then stay on page
 
 #compose message page
 @myapp_obj.route('/compose', methods=['GET', 'POST'])
@@ -133,6 +132,9 @@ def sent():
     messages = Message.query.filter_by(sender=current_user).order_by(Message.timestamp.desc()).all()
     return render_template('sent.html', messages=messages) #renders the sent messsages page
 
+#def Undo():
+  #  Undo = Message.query.filter_by(sender=current_user).order_by(Message.timestamp.desc()).all()
+    #db.session.delete()
 #add task
 @login_required
 @myapp_obj.route('/add', methods=['POST'])
