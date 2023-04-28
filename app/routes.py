@@ -58,11 +58,12 @@ def register():
 @myapp_obj.route("/mainpage", methods=['GET', 'POST'])
 @login_required #needs to be logged in to access this page
 def mainpage():
+    sort_by = request.form.get("sort")
     asc = Message.query.filter_by(recipient=current_user).order_by(Message.timestamp.asc()).all()
     des = Message.query.filter_by(recipient=current_user).order_by(Message.timestamp.desc()).all()
     #renders the main page with messages and name filled in as the parameter in mainpage.html
 
-    sort_by = request.form.get("sort")
+   
 
     return render_template('mainpage.html', sort_by=sort_by, des=des, asc=asc,name=current_user.username)
 

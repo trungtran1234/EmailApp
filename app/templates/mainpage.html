@@ -8,15 +8,6 @@
         <form action="{{ url_for('logout') }}" method="post">
             <button type="submit">Logout</button>
         </form>
-        #the search bar  
-        <div class="search">
-            <form action="#">
-                <input type="text"
-                    placeholder=" Search emails"
-                    name="search: ">
-                <button type="search">search</button>
-            </form>
-        </div>
         <form action="{{ url_for('settings') }}">
             <button type="submit">Settings</button>
         </form>
@@ -36,8 +27,20 @@
         <br>
         <h2>Inbox</h2>
         <br>
+        <form method="post" action="{{ url_for('mainpage') }}">
+            <label>Sort by:</label>
+            <select name = "sort">
+            <option value="" selected="selectd" hidden="hidden">Choose here</option>
+            <option value="Newest first">Newest first</option>
+            <option value="Oldest first">Oldest first</option>
+        </select>
+            <button type="submit">Sort</button>
+        </form>
+        
+        Sorted by: {{ sort_by }}
+        <br><br>
         <tbody>
-            {%if sort_by == 'Descending'%}
+            {%if sort_by == 'Newest first'%}
             {% for message in des %}
                 <tr>
                     <time>{{ message.timestamp.strftime('%Y-%m-%d %I:%M %p') }}</time>
