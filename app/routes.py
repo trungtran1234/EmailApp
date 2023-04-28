@@ -8,6 +8,10 @@ from app.models import Message, User
 from .forms import ComposeForm, LoginForm, RegisterForm
 from app import myapp_obj
 
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
+
 # the front page of the website, uses "base.html" for the format
 # have login and create account buttons
 @myapp_obj.route("/")
@@ -58,9 +62,13 @@ def register():
 @myapp_obj.route("/mainpage", methods=['GET', 'POST'])
 @login_required #needs to be logged in to access this page
 def mainpage():
-    messages = current_user.received_messages() #get sent messages
+    asc = Message.query.filter_by(recipient=current_user).order_by(Message.timestamp.asc()).all()
+    des = Message.query.filter_by(recipient=current_user).order_by(Message.timestamp.desc()).all()
     #renders the main page with messages and name filled in as the parameter in mainpage.html
-    return render_template('mainpage.html', messages=messages, name = current_user.username)
+
+    sort_by = request.form.get("sort")
+
+    return render_template('mainpage.html', sort_by=sort_by, des=des, asc=asc,name=current_user.username)
 
 #logout
 @myapp_obj.route("/logout", methods=['GET', 'POST'])
@@ -117,3 +125,7 @@ def sent():
     #get the Message object sent by the user, orderd by time sent
     messages = Message.query.filter_by(sender=current_user).order_by(Message.timestamp.desc()).all()
     return render_template('sent.html', messages=messages) #renders the sent messsages page
+
+
+
+
