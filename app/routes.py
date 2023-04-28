@@ -4,7 +4,7 @@ from glob import escape
 from flask import flash, redirect, render_template, request, url_for
 from flask_login import LoginManager, current_user, login_required, login_user, logout_user
 
-from app.models import Message, User
+from app.models import Message, User, TodoItem
 from .forms import ComposeForm, LoginForm, RegisterForm
 from app import myapp_obj
 
@@ -117,4 +117,38 @@ def sent():
     #get the Message object sent by the user, orderd by time sent
     messages = Message.query.filter_by(sender=current_user).order_by(Message.timestamp.desc()).all()
     return render_template('sent.html', messages=messages) #renders the sent messsages page
- 
+
+#add task
+@myapp_obj.route('/add', methods=['POST'])
+@login_required
+def add_item():
+    #get the new item fromo the form
+    new_item_text = request.form['text']
+
+    #create a new todo item
+    new_item = TodoItem(text=new_item_text, completed=False)
+    db.session.add(new_item)
+    db.session.commit()
+
+    #redirect to homepage
+    return redirect(url_for('todo.html'))
+
+@myapp_obj.route('/completed/<int:item_id>')
+@login_required
+def complete_item(item_id):
+    #get todo item from the database
+    item = TodoItem.query.get(item_id)
+
+    #update the completed one and save
+    item.completed = True
+    db.session.commit()
+
+    #Redirect back to the mainpage
+    return redirect(url_for('todo.html'))
+
+@myapp_obj.route('/todo', methods=['POST'])
+@login_required
+def todo():
+    todo_items = TodoItem.query.all()
+    return render_template('todo.html', items=todo_items)
+
