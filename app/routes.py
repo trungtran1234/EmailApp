@@ -58,9 +58,14 @@ def register():
 @myapp_obj.route("/mainpage", methods=['GET', 'POST'])
 @login_required #needs to be logged in to access this page
 def mainpage():
-    messages = current_user.received_messages() #get sent messages
+    sort_by = request.form.get("sort")
+    asc = Message.query.filter_by(recipient=current_user).order_by(Message.timestamp.asc()).all()
+    des = Message.query.filter_by(recipient=current_user).order_by(Message.timestamp.desc()).all()
     #renders the main page with messages and name filled in as the parameter in mainpage.html
-    return render_template('mainpage.html', messages=messages, name = current_user.username)
+
+   
+
+    return render_template('mainpage.html', sort_by=sort_by, des=des, asc=asc,name=current_user.username)
 
 #logout
 @myapp_obj.route("/logout", methods=['GET', 'POST'])
@@ -85,12 +90,9 @@ def changepassword():
         user = User.query.filter_by(email=form.email.data).first() #checks if user's email matches
         if user: #if email is in db
             user.password = generate_password_hash(form.new_password.data) #Creates hash for new password and assigns it as the actual password
-            db.session.commit()
-            flash('It worked!')
-            return redirect(url_for('mainpage')) #take useer back to main page
-        else: 
-            flash('nope.')
-    return render_template('changepassword.html', form=form)
+            db.session.commit() #saves new password into database
+            return redirect(url_for('mainpage')) #take user back to main page
+    return render_template('changepassword.html', form=form) #if conditions not fulfilled then stay on page
 
 #compose message page
 @myapp_obj.route('/compose', methods=['GET', 'POST'])

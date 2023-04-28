@@ -10,3 +10,4 @@ app/__pycache__/routes.cpython-39.pyc
 app/static/
 migrations/
 app/dbapp.db
+
