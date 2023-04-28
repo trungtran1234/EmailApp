@@ -3,9 +3,9 @@ from app import db
 from glob import escape
 from flask import flash, redirect, render_template, request, url_for
 from flask_login import LoginManager, current_user, login_required, login_user, logout_user
-
+from werkzeug.security import generate_password_hash, check_password_hash
 from app.models import Message, User, Todo
-from .forms import ComposeForm, LoginForm, RegisterForm
+from .forms import ComposeForm, LoginForm, RegisterForm, ChangePasswordForm
 from app import myapp_obj
 
 # the front page of the website, uses "base.html" for the format
