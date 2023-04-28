@@ -96,7 +96,7 @@ def changepassword():
             return redirect(url_for('mainpage')) #take useer back to main page
         else: 
             flash('nope.')
-    return render_template('changepassword.html', form=form) #if conditions not fulfilled then stay on page
+    return render_template('changepassword', form=form) #if conditions not fulfilled then stay on page
 
 #compose message page
 @myapp_obj.route('/compose', methods=['GET', 'POST'])
