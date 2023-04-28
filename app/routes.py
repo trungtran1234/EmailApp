@@ -92,11 +92,11 @@ def changepassword():
     form = ChangePasswordForm()
     if request.method == 'POST' and form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
-        if user and check_password_hash(user.password, form.data):
+        if user:
             user.password = generate_password_hash(form.new_password.data)
             db.session.commit()
             flash('It worked!')
-            return redirect(url_for('mainpage.html'))
+            return redirect(url_for('mainpage'))
         else: 
             flash('nope.')
     return render_template('changepassword.html', form=form)
