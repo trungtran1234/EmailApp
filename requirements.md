@@ -73,6 +73,23 @@ User entered key words that yielded no results. Message saying “Not found” s
 Messages that have matching keywords from the search bar are displayed OR “Not Found” 
 message is displayed as there are no matches
 
+### Name: Edit Profile (Kevin)
+- Summary: The user clicks on the "Edit Profile" button that takes them to the Edit Profile page to change/create their bio
+- Actors: User creating their bio
+- Pre-conditions: User must be logged in their account 
+- Trigger: Clicking on the "Edit Profile" button in the Main Page 
+- Primary Sequence: 
+1. User clicks on the text field under "bio"
+2. User types out their introduction in the text field
+3. User clicks the submit button
+- Alternative Sequence:
+User leaves the page without hitting submit, then the changes made in their bio won't be saved. 
+OR
+User clicks submit without anything inputted in the text field, program will prompt them to fill in the blank
+- Post-Condtions: 
+User's customized bio appears when a user or a friend views the profile
+OR
+User doesn't click submit, then their changes won't appear in their bio
 
 ### Name: Bookmarking messages (Kevin)
 - Summary: The user can click on an icon to bookmark messages in their inbox 
