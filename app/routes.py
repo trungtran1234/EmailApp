@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 from sqlalchemy import or_
 from app import db
 from glob import escape
