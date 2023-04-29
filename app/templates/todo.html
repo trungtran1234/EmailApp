@@ -12,9 +12,8 @@
     <table>
       <tbody>
         {%for todo in todo_list%}
-        <tr>
-          <td>{{todo.task_id}}</td>
-          <td>{{todo.name}}</td>
+        <p>
+          <td>*{{todo.name}}</td>
           {% if todo.done==False %}
           <td>Not Done</td>
           {%else%}
@@ -22,7 +21,7 @@
           {%endif%}
           <td><a href="/update/{{todo.task_id}}">Update</a></td>
           <td><a href="/delete_item/{{todo.task_id}}">Delete</a></td>
-        </tr>
+        </p>
       </tbody>
     </table>
   {%endfor%}
