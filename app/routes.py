@@ -132,24 +132,26 @@ def sent():
 @myapp_obj.route('/add', methods=['POST'])
 def add():
     user=current_user
-    name=request.form.get("name")
-    new_task=Todo(name=name,done=False,user=user)
-    db.session.add(new_task)
-    db.session.commit()
+    name=request.form.get("name") #get task name
+    new_task=Todo(name=name,done=False,user=user) #create new Todo object
+    db.session.add(new_task) #add it to database
+    db.session.commit() #commit
     return redirect(url_for("todo"))
 
+#update task
 @myapp_obj.route("/update/<int:todo_id>")
 @login_required
 def update(todo_id):
-    todo = Todo.query.get(todo_id)
-    todo.done=not todo.done
-    db.session.commit()
+    todo = Todo.query.get(todo_id) #get that task
+    todo.done=not todo.done #updates it to done
+    db.session.commit() #commit
     return redirect(url_for("todo"))
 
+#todo list
 @myapp_obj.route("/todo", methods=['POST','GET'])
 @login_required
 def todo():
-    todo_list = Todo.query.filter_by(user=current_user)
+    todo_list = Todo.query.filter_by(user=current_user) #gets todo list of current user
     return render_template('todo.html', todo_list=todo_list)
 
 #delete account
@@ -170,14 +172,17 @@ def delete():
     logout_user()
     return redirect(url_for('front')) #go back to front page
 
+#delete todo task
 @myapp_obj.route("/delete_item/<int:todo_id>", methods=['GET'])
 @login_required
-def delete_item(todo_id): #delete item from to do list in the database
-    todo_item = Todo.query.get(todo_id)
-    db.session.delete(todo_item)
-    db.session.commit()
+def delete_item(todo_id): 
+    todo_item = Todo.query.get(todo_id) #get the task item
+    db.session.delete(todo_item) #delete it
+    db.session.commit() # commit
     return redirect(url_for("todo"))
 
+
+#not fully implemented yet (not part of milestone 2)
 from sqlalchemy.exc import IntegrityError
 
 @myapp_obj.route('/add_friend', methods=['GET', 'POST'])
