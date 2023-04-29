@@ -104,8 +104,7 @@ def compose():
         the_recipient = User.query.filter_by(username=form.recipient.data).first() #finds inputted recipient from database
         if the_recipient is None: #if recipient doesn't exist in database
             error = "Invalid recipient"
-            render_template('compose.html', form=form, error=error) #stay on compose page but with error message prompted
-        
+            return render_template('compose.html', form=form, error=error) #stay on compose page but with error message prompted
         #generate new Message object with inputted data from the user 
         message = Message(sender=current_user, recipient=the_recipient, subject=form.subject.data, body=form.body.data)
         db.session.add(message) #puts message into database
@@ -132,8 +131,9 @@ def sent():
 @login_required
 @myapp_obj.route('/add', methods=['POST'])
 def add():
+    user=current_user
     name=request.form.get("name")
-    new_task=Todo(name=name,done=False)
+    new_task=Todo(name=name,done=False,user=user)
     db.session.add(new_task)
     db.session.commit()
     return redirect(url_for("todo"))
@@ -147,20 +147,31 @@ def update(todo_id):
     return redirect(url_for("todo"))
 
 @myapp_obj.route("/todo", methods=['POST','GET'])
+@login_required
 def todo():
-    todo_list = Todo.query.all()
+    todo_list = Todo.query.filter_by(user=current_user)
     return render_template('todo.html', todo_list=todo_list)
 
-#delete account button
+#delete account
 @myapp_obj.route("/delete", methods=['POST']) #only use POST method to change database, no need to "GET" something from database
 @login_required
 def delete():
+    todo_list = Todo.query.filter_by(user=current_user)
+    inbox_messages = Message.query.filter_by(recipient=current_user).all()
+    sent_messages = Message.query.filter_by(sender=current_user).all()
+    for todo in todo_list:
+        db.session.delete(todo)
+    for message in sent_messages:
+        db.session.delete(message)
+    for message in inbox_messages:
+        db.session.delete(message)
     db.session.delete(current_user) #delete user from database
     db.session.commit() #commit the changes
     logout_user()
     return redirect(url_for('front')) #go back to front page
 
 @myapp_obj.route("/delete_item/<int:todo_id>", methods=['GET'])
+@login_required
 def delete_item(todo_id):
     todo_item = Todo.query.get(todo_id)
     db.session.delete(todo_item)

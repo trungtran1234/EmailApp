@@ -50,8 +50,11 @@ class Message(db.Model):
 
 class Todo(db.Model):
     task_id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     name = db.Column(db.String(100))
     done = db.Column(db.Boolean)
+
+    user = db.relationship('User', foreign_keys=[user_id])
 
 @login_manager.user_loader
 def load_user(user_id):
