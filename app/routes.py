@@ -172,7 +172,7 @@ def delete():
 
 @myapp_obj.route("/delete_item/<int:todo_id>", methods=['GET'])
 @login_required
-def delete_item(todo_id):
+def delete_item(todo_id): #delete item from to do list in the database
     todo_item = Todo.query.get(todo_id)
     db.session.delete(todo_item)
     db.session.commit()
@@ -181,32 +181,33 @@ def delete_item(todo_id):
 from sqlalchemy.exc import IntegrityError
 
 @myapp_obj.route('/add_friend', methods=['GET', 'POST'])
-def add_friend():
+def add_friend(): #add friend object based on the email and friend to the database
     if request.method == 'POST':
         name = request.form['name']
         email = request.form['email']
         friend = Friend(name=name, email=email)
         db.session.add(friend)
-        try:
+        #This tries to commit the new Friend object to the database
+        try: #if friend with email does not exist commit
             db.session.commit()
             flash('Friend added successfully.')
             return redirect(url_for('friend_list'))
-        except IntegrityError:
+        except IntegrityError: #prompt error message if friend with email already exist
             db.session.rollback()
             flash('Friend with email {} already exists.'.format(email))
             return redirect(url_for('friend_list'))
     return render_template('add_friend.html')
 
 @myapp_obj.route('/delete_friend/<int:id>', methods=['POST'])
-def delete_friend(id):
-    friend = Friend.query.get_or_404(id)
-    db.session.delete(friend)
+def delete_friend(id): #delete friend object in the database
+    friend = Friend.query.get_or_404(id) #retrieve Friend object based on the primary key id
+    db.session.delete(friend) 
     db.session.commit()
     return redirect(url_for('friend_list'))
 
 @myapp_obj.route('/friend_list', methods=['GET','POST'])
 @login_required
-def friend_list():
+def friend_list(): #display all the friend object in the database
     friends = Friend.query.all()
     return render_template('friend_list.html', friends=friends)
 
