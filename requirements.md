@@ -159,19 +159,21 @@ User will have a new password in their account, and won't be able to use their p
 The user made the new account and can log in, or the user fails to make the new account and can’t log in.
 	
 
-### Name: Remove friend (Tri)
-- Summary: A user on the website can remove a friend that they have added
-- Actors: The user trying to remove a friend
-- Pre-conditions: The user must be on the website and logged in
-- Trigger: Click the “Friends” button to go to their friends tab
-- Primary Sequence:
-1. The user selects the friend they want to remove by clicking on their profile
-2. The user clicks “Remove Friend” button displayed on the screen
-3. The system displays “Confirm” and “Cancel” button on the screen
-4. The user clicks “Confirm” button displayed on the screen to remove the friend
-- Alternate Sequence:
-1. The user selects “Cancel” instead of “Confirm”, then the prompted buttons disappear and the friend is not removed yet.
-2. The user have no friend in their friends list so the user is unable to remove any friend.
-- Post Condition: 
-The user removed the friend and that friend is no longer in their friend list, or the user cancelled the removal and the friend is still in their friend list.
 
+### Name: Sort emails by date
+- Summary: The user can sort the emails from oldest to newest or newest to oldest based on the receive date
+- Actors: The user that is trying to sort their email by date
+- Pre-conditions: The user must be logged in and on the mainpage
+- Trigger: Clicking a menu and selecting their desired sorting, then clicking the confirm button
+- Primary Sequence: 
+1. User opens the drop down menu
+2. User selects desired type of sort
+3. User clicks the confirm button
+- Alternative Sequence:
+1. There are no emails available to be sorted and nothing happens
+- Post Condition: 
+The emails are now sorted from oldest to newest
+				OR
+			      There are no emails that were ever sent to the user so nothing will happen.
+
+	
