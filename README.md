@@ -8,24 +8,24 @@
 ## Introduction
 Sigma Mail is a modern, web-based email application that allows registered users to manage their emails online. With features like composing email and todo list, this app makes it easy to stay on top of your email game. Built with python, html, and css, Sigma mail is a reliable and efficient way to manage your emails from anywhere with an internet connection.
 
-## Installation
-1. Clone the repository: 
-SSH Clone:
-git clone git@github.com:ngtri1809/project131.git 
-HTTPS Clone:
-https://github.com/ngtri1809/project131.git
+## Installation  
+1. Clone the repository:   
+SSH Clone:  
+git clone git@github.com:ngtri1809/project131.git   
+HTTPS Clone:  
+https://github.com/ngtri1809/project131.git  
 
-2. Use pip to install libraries: 
+2. Use pip to install libraries:   
 pip install sqlalchemy, flask, flask_login, flask_sqlalchemy, sqlalchemy, flask_wtf, wtf_forms, datetime, werkzeug
 
-3. Run the program (in the terminal):
-cd project131
-python3 run.py
-Link to go on the webpage:
-http://127.0.0.1:5000
+3. Run the program (in the terminal):  
+cd project131  
+python3 run.py  
+Link to go on the webpage:  
+http://127.0.0.1:5000  
 
-4. Exit the program:
-In the terminal, press ctrl + C and it will end the program
+4. Exit the program:  
+In the terminal, press ctrl + C and it will end the program  
 
 ## How to use
 1. Create account: The user can create an account
