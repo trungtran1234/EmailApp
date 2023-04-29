@@ -172,8 +172,8 @@ The user made the new account and can log in, or the user fails to make the new 
 - Alternative Sequence:
 1. There are no emails available to be sorted and nothing happens
 - Post Condition: 
-The emails are now sorted from oldest to newest
+The emails are now sorted by whatever the user selected
 				OR
-			      There are no emails that were ever sent to the user so nothing will happen.
+			      There are no emails that were ever sent to the user so no emails will be sorted
 
 	
