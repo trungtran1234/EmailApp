@@ -26,25 +26,32 @@
         <br>
         <form action="{{ url_for('compose') }}" method="post">
             <button type="submit">Compose message</button>
-        </form>
+        </form><br>
+        
+        <form action="{{ url_for('todo') }}" method="post"> <!-- call the todo function in the routes.py when the user click the button-->
+            <button type="submit">To-Do List</button>
+        </form><br>
+        <form action="{{ url_for('friend_list') }}" method="post">
+          <button type="submit">Friend List</button> 
+      </form><br> 
         <br>
         <br>
         <h2>Inbox</h2>
         <br>
-
-
         <form method="post" action="{{ url_for('mainpage') }}">
             <label>Sort by:</label>
             <select name = "sort">
-            <option value="Decending">Descending</option>
-            <option value="Ascending">Ascending</option>
+            <option value="" selected="selectd" hidden="hidden">Choose here</option>
+            <option value="Newest first">Newest first</option>
+            <option value="Oldest first">Oldest first</option>
         </select>
             <button type="submit">Sort</button>
         </form>
-
-          
+        
+        Sorted by: {{ sort_by }}
+        <br><br>
         <tbody>
-            {%if sort_by == 'Descending'%}
+            {%if sort_by == 'Newest first'%}
             {% for message in des %}
                 <tr>
                     <td>From: {{ message.sender.username }}</td>
@@ -59,9 +66,11 @@
             {%else%}
             {% for message in asc %}
                 <tr>
+                    <time>{{ message.timestamp.strftime('%Y-%m-%d %I:%M %p') }}</time>
+                    <br>
                     <td>From: {{ message.sender.username }}</td>
                     <br>
-                    <td>{{ message.subject }}</td>
+                    <td>Subject: {{ message.subject }}</td>
                     <br>
                     <td><a href="{{ url_for('message', message_id=message.id) }}">View Message</a></td>
                     <br>

@@ -3,9 +3,9 @@ from app import db
 from glob import escape
 from flask import flash, redirect, render_template, request, url_for
 from flask_login import LoginManager, current_user, login_required, login_user, logout_user
-
-from app.models import Message, User
-from .forms import ComposeForm, LoginForm, RegisterForm
+from werkzeug.security import generate_password_hash, check_password_hash
+from app.models import Message, User, Todo, Friend
+from .forms import ComposeForm, LoginForm, RegisterForm, ChangePasswordForm
 from app import myapp_obj
 
 from sqlalchemy import create_engine
@@ -62,11 +62,12 @@ def register():
 @myapp_obj.route("/mainpage", methods=['GET', 'POST'])
 @login_required #needs to be logged in to access this page
 def mainpage():
+    sort_by = request.form.get("sort")
     asc = Message.query.filter_by(recipient=current_user).order_by(Message.timestamp.asc()).all()
     des = Message.query.filter_by(recipient=current_user).order_by(Message.timestamp.desc()).all()
     #renders the main page with messages and name filled in as the parameter in mainpage.html
 
-    sort_by = request.form.get("sort")
+   
 
     return render_template('mainpage.html', sort_by=sort_by, des=des, asc=asc,name=current_user.username)
 
@@ -83,14 +84,19 @@ def logout():
 def settings():
     return render_template('settings.html') #has delete account button (for now)
 
-#delete account button
-@myapp_obj.route("/delete", methods=['POST']) #only use POST method to change database, no need to "GET" something from database
+#request.method == 'POST' and 
+#change password
+@myapp_obj.route("/changepassword", methods=['GET','POST']) 
 @login_required
-def delete():
-    db.session.delete(current_user) #delete user from database
-    db.session.commit() #commit the changes
-    logout_user()
-    return redirect(url_for('front')) #go back to front page
+def changepassword(): 
+    form = ChangePasswordForm() #take ChangePasswordForm class in from forms.py
+    if request.method == 'POST' and form.validate_on_submit(): 
+        user = User.query.filter_by(email=form.email.data).first() #checks if user's email matches
+        if user: #if email is in db
+            user.password = generate_password_hash(form.new_password.data) #Creates hash for new password and assigns it as the actual password
+            db.session.commit() #saves new password into database
+            return redirect(url_for('mainpage')) #take user back to main page
+    return render_template('changepassword.html', form=form) #if conditions not fulfilled then stay on page
 
 #compose message page
 @myapp_obj.route('/compose', methods=['GET', 'POST'])
@@ -102,8 +108,7 @@ def compose():
         the_recipient = User.query.filter_by(username=form.recipient.data).first() #finds inputted recipient from database
         if the_recipient is None: #if recipient doesn't exist in database
             error = "Invalid recipient"
-            render_template('compose.html', form=form, error=error) #stay on compose page but with error message prompted
-        
+            return render_template('compose.html', form=form, error=error) #stay on compose page but with error message prompted
         #generate new Message object with inputted data from the user 
         message = Message(sender=current_user, recipient=the_recipient, subject=form.subject.data, body=form.body.data)
         db.session.add(message) #puts message into database
@@ -126,6 +131,100 @@ def sent():
     messages = Message.query.filter_by(sender=current_user).order_by(Message.timestamp.desc()).all()
     return render_template('sent.html', messages=messages) #renders the sent messsages page
 
+#add task
+@login_required
+@myapp_obj.route('/add', methods=['POST'])
+def add():
+    user=current_user
+    name=request.form.get("name") #get task name
+    new_task=Todo(name=name,done=False,user=user) #create new Todo object
+    db.session.add(new_task) #add it to database
+    db.session.commit() #commit
+    return redirect(url_for("todo"))
 
+#update task
+@myapp_obj.route("/update/<int:todo_id>")
+@login_required
+def update(todo_id):
+    todo = Todo.query.get(todo_id) #get that task
+    todo.done=not todo.done #updates it to done
+    db.session.commit() #commit
+    return redirect(url_for("todo"))
+
+#todo list
+@myapp_obj.route("/todo", methods=['POST','GET'])
+@login_required
+def todo():
+    todo_list = Todo.query.filter_by(user=current_user) #gets todo list of current user
+    return render_template('todo.html', todo_list=todo_list)
+
+#delete account
+@myapp_obj.route("/delete", methods=['POST']) #only use POST method to change database, no need to "GET" something from database
+@login_required
+def delete():
+    todo_list = Todo.query.filter_by(user=current_user)
+    inbox_messages = Message.query.filter_by(recipient=current_user).all()
+    sent_messages = Message.query.filter_by(sender=current_user).all()
+    for todo in todo_list:
+        db.session.delete(todo)
+    for message in sent_messages:
+        db.session.delete(message)
+    for message in inbox_messages:
+        db.session.delete(message)
+    db.session.delete(current_user) #delete user from database
+    db.session.commit() #commit the changes
+    logout_user()
+    return redirect(url_for('front')) #go back to front page
+
+#delete todo task
+@myapp_obj.route("/delete_item/<int:todo_id>", methods=['GET'])
+@login_required
+def delete_item(todo_id): 
+    todo_item = Todo.query.get(todo_id) #get the task item
+    db.session.delete(todo_item) #delete it
+    db.session.commit() # commit
+    return redirect(url_for("todo"))
+
+
+
+from sqlalchemy.exc import IntegrityError
+
+@myapp_obj.route('/add_friend', methods=['GET', 'POST'])
+def add_friend(): #add friend object based on the email and friend to the database
+    if request.method == 'POST':
+        name = request.form['name']
+        email = request.form['email']
+        #This check if email has already been created
+        account = User.query.filter_by(username=name,email=email).first()
+        if account is None:
+            flash('User with email {} or username {} does not exist.'.format(email,name))
+            return redirect(url_for('friend_list'))
+        usersearch = User.query.filter_by(username=name).first()
+        #check if a friend with the same email already exists
+        existing_friend = Friend.query.filter_by(email=email, friend_of=current_user).first()
+        if existing_friend:
+            flash('Friend with email {} already exists.'.format(email))
+            return redirect(url_for('friend_list'))
+        
+        friend = Friend(name=name, email=email,friend_of=current_user)
+        db.session.add(friend)
+        db.session.commit()
+        flash('Friend added successfully.')
+        return redirect(url_for('friend_list'))
+        #This tries to commit the new Friend object to the database
+    return render_template('add_friend.html')
+
+@myapp_obj.route('/delete_friend/<int:id>', methods=['POST'])
+def delete_friend(id): #delete friend object in the database
+    friend = Friend.query.get_or_404(id) #retrieve Friend object based on the primary key id
+    db.session.delete(friend) 
+    db.session.commit()
+    return redirect(url_for('friend_list'))
+
+@myapp_obj.route('/friend_list', methods=['GET','POST'])
+@login_required
+def friend_list(): #display all the friend object in the database
+    friends = Friend.query.filter_by(friend_of=current_user)
+    return render_template('friend_list.html', friends=friends)
 
 

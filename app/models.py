@@ -11,6 +11,8 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(32), nullable=False)
     password = db.Column(db.String(32), nullable=False)
     email = db.Column(db.String(100), nullable=False)
+    
+    friends = db.relationship('Friend', backref='user', lazy='dynamic')
 
     def set_password(self, password):
         self.password = generate_password_hash(password)
@@ -23,7 +25,17 @@ class User(db.Model, UserMixin):
     
     def received_messages(self):
         return Message.query.filter_by(recipient=self).order_by(Message.timestamp.desc()).all()
+class Friend(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    #Define relationship between user and friend
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    friend_of = db.relationship('User', foreign_keys=[user_id])
 
+    def __repr__(self):
+        return f"Friend('{self.name}', '{self.email}')"
+    
 #Message object
 class Message(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -38,8 +50,11 @@ class Message(db.Model):
 
 class Todo(db.Model):
     task_id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100))
-    done = db.Column(db.Boolean)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False) # set the foreign key from user
+    name = db.Column(db.String(100)) # name of the task
+    done = db.Column(db.Boolean) #user mark as done or undone
+    #Define relationship between user and todo list's tasks using the user_id 
+    user = db.relationship('User', foreign_keys=[user_id])
 
 @login_manager.user_loader
 def load_user(user_id):
