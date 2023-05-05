@@ -11,8 +11,8 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(32), nullable=False)
     password = db.Column(db.String(32), nullable=False)
     email = db.Column(db.String(100), nullable=False)
-    #bug here
-    #friends = db.relationship('Friengit add', backref='user', lazy='dynamic')
+    
+    friends = db.relationship('Friend', backref='user', lazy='dynamic')
 
     def set_password(self, password):
         self.password = generate_password_hash(password)
@@ -29,9 +29,9 @@ class Friend(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    #bug here
-    #user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    #friend_of = db.relationship('User', foreign_keys=[user_id])
+    #Define relationship between user and friend
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    friend_of = db.relationship('User', foreign_keys=[user_id])
 
     def __repr__(self):
         return f"Friend('{self.name}', '{self.email}')"
