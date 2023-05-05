@@ -1,3 +1,4 @@
+from datetime import datetime
 from sqlalchemy import or_
 from app import db
 from glob import escape
@@ -106,7 +107,7 @@ def compose():
             error = "Invalid recipient"
             return render_template('compose.html', form=form, error=error) #stay on compose page but with error message prompted
         #generate new Message object with inputted data from the user 
-        message = Message(sender=current_user, recipient=the_recipient, subject=form.subject.data, body=form.body.data)
+        message = Message(sender=current_user, recipient=the_recipient, subject=form.subject.data, body=form.body.data, timestamp = datetime.now())
         db.session.add(message) #puts message into database
         db.session.commit() #commit the changes
         return redirect(url_for('mainpage')) #go back to main page
