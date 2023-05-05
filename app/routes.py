@@ -182,7 +182,7 @@ def delete_item(todo_id):
     return redirect(url_for("todo"))
 
 
-#not fully implemented yet (not part of milestone 2)
+
 from sqlalchemy.exc import IntegrityError
 
 @myapp_obj.route('/add_friend', methods=['GET', 'POST'])
@@ -190,17 +190,24 @@ def add_friend(): #add friend object based on the email and friend to the databa
     if request.method == 'POST':
         name = request.form['name']
         email = request.form['email']
-        friend = Friend(name=name, email=email)
-        db.session.add(friend)
-        #This tries to commit the new Friend object to the database
-        try: #if friend with email does not exist commit
-            db.session.commit()
-            flash('Friend added successfully.')
+        #This check if email has already been created
+        account = User.query.filter_by(username=name,email=email).first()
+        if account is None:
+            flash('User with email {} or username {} does not exist.'.format(email,name))
             return redirect(url_for('friend_list'))
-        except IntegrityError: #prompt error message if friend with email already exist
-            db.session.rollback()
+        usersearch = User.query.filter_by(username=name).first()
+        #check if a friend with the same email already exists
+        existing_friend = Friend.query.filter_by(email=email, friend_of=current_user).first()
+        if existing_friend:
             flash('Friend with email {} already exists.'.format(email))
             return redirect(url_for('friend_list'))
+        
+        friend = Friend(name=name, email=email,friend_of=current_user)
+        db.session.add(friend)
+        db.session.commit()
+        flash('Friend added successfully.')
+        return redirect(url_for('friend_list'))
+        #This tries to commit the new Friend object to the database
     return render_template('add_friend.html')
 
 @myapp_obj.route('/delete_friend/<int:id>', methods=['POST'])
@@ -213,7 +220,7 @@ def delete_friend(id): #delete friend object in the database
 @myapp_obj.route('/friend_list', methods=['GET','POST'])
 @login_required
 def friend_list(): #display all the friend object in the database
-    friends = Friend.query.all()
+    friends = Friend.query.filter_by(friend_of=current_user)
     return render_template('friend_list.html', friends=friends)
 
 
