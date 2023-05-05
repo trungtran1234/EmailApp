@@ -5,8 +5,9 @@
   </head>
   <body>
     <h1>Friend List</h1>
-    {% if friends %}
+    {% if friends %} 
       <ul>
+        <!-- Checking if there are any friends or not -->
         {% for friend in friends %}
           <li>
             {{ friend.name }} - {{ friend.email }}
