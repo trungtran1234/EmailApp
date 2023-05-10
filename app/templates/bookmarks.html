@@ -1,0 +1,14 @@
+<button class="back-button" onclick="window.history.back()">Back</button>
+
+<h1>Bookmarked</h1>
+
+  {% for message in messages %}
+    <div class="message">
+      <p><strong>To:</strong> {{ message.recipient.username }}</p>
+      <p><strong>Subject:</strong> {{ message.subject }}</p>
+      <p><strong>Date:</strong> {{ message.timestamp.strftime('%Y-%m-%d %I:%M %p') }}</p>
+      <td><a href="{{ url_for('message', message_id=message.id) }}">View Message</a></td>
+      <br>
+      <br>
+    </div>
+  {% endfor %}

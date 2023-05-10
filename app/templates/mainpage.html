@@ -59,6 +59,9 @@
             {%else%}
             {% for message in asc %}
                 <tr>
+                    <form action="/bookmark/{{ message.id }}" method="POST">
+                        <button type="submit">Bookmark</button>
+                    </form>
                     <time>{{ message.timestamp.strftime('%Y-%m-%d %I:%M %p') }}</time>
                     <br>
                     <td>From: {{ message.sender.username }}</td>
