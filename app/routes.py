@@ -189,7 +189,14 @@ def undo(message_id):
     db.session.commit()
     return redirect(url_for('sent'))
 
+@myapp_obj.route("/undo/<int:message_id>", methods=['POST'])
+@login_required
+def bookmark(message_id):
+    bookmarked_message = Message.query.get(message_id)
+    db.session.add(bookmarked_message)
+    db.session.commit()
     
+
 
 from sqlalchemy.exc import IntegrityError
 
