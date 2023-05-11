@@ -11,7 +11,10 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(32), nullable=False)
     password = db.Column(db.String(32), nullable=False)
     email = db.Column(db.String(100), nullable=False)
-    
+    bio = db.Column(db.String(100), nullable = False, default = '')
+    name = db.Column(db.String(32), nullable = False, default = '')
+
+
     friends = db.relationship('Friend', backref='user', lazy='dynamic')
 
     def set_password(self, password):
@@ -25,6 +28,7 @@ class User(db.Model, UserMixin):
     
     def received_messages(self):
         return Message.query.filter_by(recipient=self).order_by(Message.timestamp.desc()).all()
+       
 class Friend(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
@@ -44,6 +48,7 @@ class Message(db.Model):
     subject = db.Column(db.String(100), nullable=False)
     body = db.Column(db.String(500), nullable=False)
     timestamp = db.Column(db.DateTime, default=datetime.now())
+    bookmark = db.Column(db.Boolean, default=False)
 
     sender = db.relationship('User', foreign_keys=[sender_id])
     recipient = db.relationship('User', foreign_keys=[recipient_id])

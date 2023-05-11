@@ -1,12 +1,12 @@
 from datetime import datetime
-from sqlalchemy import or_
+from sqlalchemy import not_, or_
 from app import db
 from glob import escape
 from flask import flash, redirect, render_template, request, url_for
 from flask_login import LoginManager, current_user, login_required, login_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from app.models import Message, User, Todo, Friend
-from .forms import ComposeForm, LoginForm, RegisterForm, ChangePasswordForm
+from .forms import ComposeForm, LoginForm, RegisterForm, ChangePasswordForm, updateForm
 from app import myapp_obj
 
 # the front page of the website, uses "base.html" for the format
@@ -203,10 +203,13 @@ def undo(message_id):
 
     
 @myapp_obj.route('/add_friend', methods=['GET', 'POST'])
+@login_required
 def add_friend(): #add friend object based on the email and friend to the database
     if request.method == 'POST':
         name = request.form['name']
         email = request.form['email']
+        from_name = current_user.username
+        from_email = current_user.email
         if email == current_user.email:
             flash('You cannot add yourself as a friend.')
             return redirect(url_for('friend_list'))
@@ -221,8 +224,7 @@ def add_friend(): #add friend object based on the email and friend to the databa
         if existing_friend:
             flash('Friend with email {} already exists.'.format(email))
             return redirect(url_for('friend_list'))
-        
-        friend = Friend(name=name, email=email,friend_of=current_user)
+        friend = Friend(name=name, email=email,friend_of=current_user,from_name=from_name,from_email=from_email)
         db.session.add(friend)
         db.session.commit()
         flash('Friend added successfully.')
@@ -231,6 +233,7 @@ def add_friend(): #add friend object based on the email and friend to the databa
     return render_template('add_friend.html')
 
 @myapp_obj.route('/delete_friend/<int:id>', methods=['POST'])
+@login_required
 def delete_friend(id): #delete friend object in the database
     friend = Friend.query.get_or_404(id) #retrieve Friend object based on the primary key id
     db.session.delete(friend) 
@@ -240,14 +243,73 @@ def delete_friend(id): #delete friend object in the database
 @myapp_obj.route('/friend_list', methods=['GET','POST'])
 @login_required
 def friend_list(): #display all the friend object in the database
-    friends = Friend.query.filter_by(friend_of=current_user)
-    return render_template('friend_list.html', friends=friends)
+    friends_added_by_me = Friend.query.filter_by(from_name=current_user.username).all()
+    friends_added_me = Friend.query.filter_by(email=current_user.email).filter(not_(Friend.from_name == current_user.username)).all()
+
+    friends_added = []
+    for friend in friends_added_by_me + friends_added_me:
+        if friend.name != current_user.username:
+            friends_added.append(friend)
+    added_friends = []
+    for friend in friends_added_by_me + friends_added_me:
+        if friend.from_name != current_user.username:
+            added_friends.append(friend)
+    return render_template('friend_list.html', friends_added=friends_added, added_friends=added_friends, friends_added_by_me=friends_added_by_me, friends_added_me=friends_added_me)
+
+@myapp_obj.route('/profile', methods = ['GET', 'POST'])
+@login_required
+def profile(): 
+    form = updateForm()
+    return render_template('profile.html', form=form)
+
+@myapp_obj.route('/editprofile', methods = ['GET', 'POST'])
+@login_required
+def edit_profile(): 
+    form = updateForm()
+    return render_template('editprofile.html', form=form)
+
+@myapp_obj.route('/updateprofile', methods=['GET', 'POST'])
+@login_required
+def updateProfile():
+    form = updateForm()
+    if form.validate_on_submit():
+        user = User.query.get(current_user.id)
+        if form.update1.data:
+            user.name = form.name.data
+            db.session.commit()
+        elif form.update2.data:
+            user.bio = form.bio.data
+            db.session.commit()
+        return redirect(url_for('profile'))
+    return render_template('editprofile.html', form=form)
+
+@myapp_obj.route('/search_results', methods=['GET'])
+@login_required
+def search_results():
+    query = request.args.get('query')
+    results = Message.query.filter(Message.body.contains(query)).all()
+    return render_template('search_results.html', results=results)
 
 @myapp_obj.route('/message/<int:message_id>/bookmark', methods=['POST'])
 @login_required
-def bookmark_message(message_id):
+def bookmark(message_id):
     message = Message.query.get(message_id)
     message.bookmark = True
     db.session.commit()
     flash('Message bookmarked!')
     return redirect(url_for('mainpage'))
+
+@myapp_obj.route('/message/<int:message_id>/unbookmark', methods=['POST'])
+@login_required
+def unbookmark(message_id):
+    message = Message.query.get(message_id)
+    message.bookmark = False
+    db.session.commit()
+    flash('Message unbookmarked!')
+    return redirect(url_for('mainpage'))
+
+@myapp_obj.route('/bookmarked', methods = ['GET'])
+@login_required
+def view_bookmark():
+    bookmarked = Message.query.filter_by(bookmark=True).all()
+    return render_template('bookmarked.html', bookmarked=bookmarked)
