@@ -181,7 +181,15 @@ def delete_item(todo_id):
     db.session.commit() # commit
     return redirect(url_for("todo"))
 
+@myapp_obj.route("/undo/<int:message_id>", methods=['POST'])
+@login_required
+def undo(message_id):
+    last_message = Message.query.get(message_id)
+    db.session.delete(last_message)
+    db.session.commit()
+    return redirect(url_for('sent'))
 
+    
 
 from sqlalchemy.exc import IntegrityError
 
@@ -222,5 +230,3 @@ def delete_friend(id): #delete friend object in the database
 def friend_list(): #display all the friend object in the database
     friends = Friend.query.filter_by(friend_of=current_user)
     return render_template('friend_list.html', friends=friends)
-
-
