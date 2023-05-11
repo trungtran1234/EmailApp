@@ -1,3 +1,4 @@
+from datetime import datetime
 from sqlalchemy import or_
 from app import db
 from glob import escape
@@ -47,6 +48,9 @@ def register():
             if existing_user.email == form.email.data and existing_user.username == form.username.data:
                 error = 'This username and email is already taken. Please choose a different ones.'
             return render_template('register.html', form=form, error=error) #stay on register page but with error message prompted
+        if '@' not in form.email.data or form.email.data.count('@') > 1:
+            error = 'Invalid email address. Please enter a valid email address.'
+            return render_template('register.html', form=form, error=error)
         new_account = User(username=form.username.data, email = form.email.data) #if not an existing user, create new user in database
         new_account.set_password(form.password.data) #set password
         db.session.add(new_account) #add new account into database (like staging changes into database)
@@ -86,13 +90,17 @@ def settings():
 @login_required
 def changepassword(): 
     form = ChangePasswordForm() #take ChangePasswordForm class in from forms.py
+    error = None
     if request.method == 'POST' and form.validate_on_submit(): 
         user = User.query.filter_by(email=form.email.data).first() #checks if user's email matches
         if user: #if email is in db
             user.password = generate_password_hash(form.new_password.data) #Creates hash for new password and assigns it as the actual password
             db.session.commit() #saves new password into database
             return redirect(url_for('mainpage')) #take user back to main page
-    return render_template('changepassword.html', form=form) #if conditions not fulfilled then stay on page
+        else:
+            error = "Invalid email"
+            return render_template('changepassword.html', form=form, error=error)
+    return render_template('changepassword.html', form=form, error=error) #if conditions not fulfilled then stay on page
 
 #compose message page
 @myapp_obj.route('/compose', methods=['GET', 'POST'])
@@ -106,7 +114,7 @@ def compose():
             error = "Invalid recipient"
             return render_template('compose.html', form=form, error=error) #stay on compose page but with error message prompted
         #generate new Message object with inputted data from the user 
-        message = Message(sender=current_user, recipient=the_recipient, subject=form.subject.data, body=form.body.data)
+        message = Message(sender=current_user, recipient=the_recipient, subject=form.subject.data, body=form.body.data, timestamp = datetime.now())
         db.session.add(message) #puts message into database
         db.session.commit() #commit the changes
         return redirect(url_for('mainpage')) #go back to main page
@@ -138,6 +146,7 @@ def add():
     db.session.commit() #commit
     return redirect(url_for("todo"))
 
+
 #update task
 @myapp_obj.route("/update/<int:todo_id>")
 @login_required
@@ -161,12 +170,15 @@ def delete():
     todo_list = Todo.query.filter_by(user=current_user)
     inbox_messages = Message.query.filter_by(recipient=current_user).all()
     sent_messages = Message.query.filter_by(sender=current_user).all()
+    friends = Friend.query.filter_by(user_id=current_user.id).all()
     for todo in todo_list:
         db.session.delete(todo)
     for message in sent_messages:
         db.session.delete(message)
     for message in inbox_messages:
         db.session.delete(message)
+    for friend in friends:
+        db.session.delete(friend)
     db.session.delete(current_user) #delete user from database
     db.session.commit() #commit the changes
     logout_user()
@@ -190,14 +202,14 @@ def undo(message_id):
     return redirect(url_for('sent'))
 
     
-
-from sqlalchemy.exc import IntegrityError
-
 @myapp_obj.route('/add_friend', methods=['GET', 'POST'])
 def add_friend(): #add friend object based on the email and friend to the database
     if request.method == 'POST':
         name = request.form['name']
         email = request.form['email']
+        if email == current_user.email:
+            flash('You cannot add yourself as a friend.')
+            return redirect(url_for('friend_list'))
         #This check if email has already been created
         account = User.query.filter_by(username=name,email=email).first()
         if account is None:
