@@ -16,7 +16,7 @@
       <tbody>
         {%for todo in todo_list%}
         <p>
-          <td>*{{todo.name}}</td>
+          <td>{{todo.name}}</td>
           <!--Displace not done or done based on the done attribute of the task-->
           {% if todo.done==False %}
           <td>Not Done</td>

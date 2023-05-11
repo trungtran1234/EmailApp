@@ -36,3 +36,10 @@ class ChangePasswordForm(FlaskForm): #takes in user's email, new_password they w
 class AddFriendForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()]) #Takees in user's username
     submit = SubmitField('Add Friend')
+
+
+class updateForm(FlaskForm):
+    bio = StringField('Bio')
+    update1 = SubmitField('Update Name')
+    name = StringField('Name') 
+    update2 = SubmitField('Update Bio')
