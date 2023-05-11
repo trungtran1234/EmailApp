@@ -242,3 +242,12 @@ def delete_friend(id): #delete friend object in the database
 def friend_list(): #display all the friend object in the database
     friends = Friend.query.filter_by(friend_of=current_user)
     return render_template('friend_list.html', friends=friends)
+
+@myapp_obj.route('/message/<int:message_id>/bookmark', methods=['POST'])
+@login_required
+def bookmark_message(message_id):
+    message = Message.query.get(message_id)
+    message.bookmark = True
+    db.session.commit()
+    flash('Message bookmarked!')
+    return redirect(url_for('mainpage'))
