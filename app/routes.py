@@ -6,7 +6,7 @@ from flask import flash, redirect, render_template, request, url_for
 from flask_login import LoginManager, current_user, login_required, login_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from app.models import Message, User, Todo, Friend
-from .forms import ComposeForm, LoginForm, RegisterForm, ChangePasswordForm
+from .forms import ComposeForm, LoginForm, RegisterForm, ChangePasswordForm, updateForm
 from app import myapp_obj
 
 # the front page of the website, uses "base.html" for the format
@@ -242,3 +242,33 @@ def delete_friend(id): #delete friend object in the database
 def friend_list(): #display all the friend object in the database
     friends = Friend.query.filter_by(friend_of=current_user)
     return render_template('friend_list.html', friends=friends)
+
+@myapp_obj.route('/profile', methods = ['GET', 'POST'])
+def profile(): 
+    form = updateForm()
+    return render_template('profile.html', form=form)
+
+@myapp_obj.route('/editprofile', methods = ['GET', 'POST'])
+def edit_profile(): 
+    form = updateForm()
+    return render_template('editprofile.html', form=form)
+
+@myapp_obj.route('/updateprofile', methods=['GET', 'POST'])
+def updateProfile():
+    form = updateForm()
+    if form.validate_on_submit():
+        user = User.query.get(current_user.id)
+        if form.update1.data:
+            user.name = form.name.data
+            db.session.commit()
+        elif form.update2.data:
+            user.bio = form.bio.data
+            db.session.commit()
+        return redirect(url_for('profile'))
+    return render_template('editprofile.html', form=form)
+
+@myapp_obj.route('/search_results', methods=['GET'])
+def search_results():
+    query = request.args.get('query')
+    results = Message.query.filter(Message.body.contains(query)).all()
+    return render_template('search_results.html', results=results)
