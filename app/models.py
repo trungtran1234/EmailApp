@@ -28,6 +28,7 @@ class User(db.Model, UserMixin):
     
     def received_messages(self):
         return Message.query.filter_by(recipient=self).order_by(Message.timestamp.desc()).all()
+       
 class Friend(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
