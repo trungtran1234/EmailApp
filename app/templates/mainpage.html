@@ -8,6 +8,9 @@
         <form action="{{ url_for('logout') }}" method="post">
             <button type="submit">Logout</button>
         </form>
+        <form action="{{ url_for('bookmarks') }}">
+            <button type="submit">Bookmarks</button>
+        </form>
         <form action="{{ url_for('settings') }}">
             <button type="submit">Settings</button>
         </form>
@@ -26,9 +29,8 @@
           <button type="submit">Friend List</button> 
       </form><br> 
         <br>
-        <form action="/bookmark/{{ message.id }}" method="POST">
-            <button type="submit">Bookmark</button>
-        </form>
+        <br>
+       <br>
         <br>
         <h2>Inbox</h2>
         <br>
@@ -56,6 +58,7 @@
                     <br>
                     <td><a href="{{ url_for('message', message_id=message.id) }}">View Message</a></td>
                     <br>
+                    <td><a href="{{ url_for('bookmarking', message_id=message.id) }}">Bookmark!</a></td>
                     <br>
                 </tr>
             {% endfor %}
@@ -70,6 +73,7 @@
                     <br>
                     <td><a href="{{ url_for('message', message_id=message.id) }}">View Message</a></td>
                     <br>
+                    <td><a href="{{ url_for('bookmarking', message_id=message.id) }}">Bookmark!</a></td>
                     <br>
                 </tr>
 
