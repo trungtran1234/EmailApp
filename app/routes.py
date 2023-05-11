@@ -90,13 +90,17 @@ def settings():
 @login_required
 def changepassword(): 
     form = ChangePasswordForm() #take ChangePasswordForm class in from forms.py
+    error = None
     if request.method == 'POST' and form.validate_on_submit(): 
         user = User.query.filter_by(email=form.email.data).first() #checks if user's email matches
         if user: #if email is in db
             user.password = generate_password_hash(form.new_password.data) #Creates hash for new password and assigns it as the actual password
             db.session.commit() #saves new password into database
             return redirect(url_for('mainpage')) #take user back to main page
-    return render_template('changepassword.html', form=form) #if conditions not fulfilled then stay on page
+        else:
+            error = "Invalid email"
+            return render_template('changepassword.html', form=form, error=error)
+    return render_template('changepassword.html', form=form, error=error) #if conditions not fulfilled then stay on page
 
 #compose message page
 @myapp_obj.route('/compose', methods=['GET', 'POST'])
@@ -142,6 +146,7 @@ def add():
     db.session.commit() #commit
     return redirect(url_for("todo"))
 
+
 #update task
 @myapp_obj.route("/update/<int:todo_id>")
 @login_required
@@ -165,12 +170,15 @@ def delete():
     todo_list = Todo.query.filter_by(user=current_user)
     inbox_messages = Message.query.filter_by(recipient=current_user).all()
     sent_messages = Message.query.filter_by(sender=current_user).all()
+    friends = Friend.query.filter_by(user_id=current_user.id).all()
     for todo in todo_list:
         db.session.delete(todo)
     for message in sent_messages:
         db.session.delete(message)
     for message in inbox_messages:
         db.session.delete(message)
+    for friend in friends:
+        db.session.delete(friend)
     db.session.delete(current_user) #delete user from database
     db.session.commit() #commit the changes
     logout_user()
@@ -185,7 +193,15 @@ def delete_item(todo_id):
     db.session.commit() # commit
     return redirect(url_for("todo"))
 
+@myapp_obj.route("/undo/<int:message_id>", methods=['POST'])
+@login_required
+def undo(message_id):
+    last_message = Message.query.get(message_id)
+    db.session.delete(last_message)
+    db.session.commit()
+    return redirect(url_for('sent'))
 
+    
 @myapp_obj.route('/add_friend', methods=['GET', 'POST'])
 def add_friend(): #add friend object based on the email and friend to the database
     if request.method == 'POST':
@@ -226,5 +242,3 @@ def delete_friend(id): #delete friend object in the database
 def friend_list(): #display all the friend object in the database
     friends = Friend.query.filter_by(friend_of=current_user)
     return render_template('friend_list.html', friends=friends)
-
-    
