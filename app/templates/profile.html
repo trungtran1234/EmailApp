@@ -1,1 +1,25 @@
-<a href="{{ url_for('user_profile', username=user.username) }}">View Profile</a>
+
+<form action="{{ url_for('mainpage') }}">
+    <button type="submit">Back</button>
+</form>
+
+<title>
+    User Profile
+</title>
+<body>
+        <p>
+            Name: {{ current_user.name }}
+            <br>
+            Username: {{ current_user.username }}
+            <br>
+        
+            Email: {{ current_user.email }}
+            <br>
+            Bio: {{ current_user.bio }}
+            <br>
+        </p>
+
+</body>
+<form action="{{ url_for('edit_profile') }}" method="post">
+    <button type="submit">Edit Profile</button> 
+</form><br> 
