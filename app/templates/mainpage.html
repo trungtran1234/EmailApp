@@ -16,6 +16,9 @@
                     <li><form action="{{ url_for('sent') }}">
                         <button class="nav-link" type="submit">View sent messages</button>
                     </form></li>
+                    <li><form action="{{ url_for('view_bookmark') }}">
+                        <button class="nav-link" type="submit">View bookmarked</button>
+                    </form></li>
                     <li class ="nav-item"><form action="{{ url_for('todo') }}" method="post"> <!-- call the todo function in the routes.py when the user click the button-->
                         <button class="nav-link" type="submit">To-Do List</button>
                     </form></li>
