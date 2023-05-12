@@ -1,0 +1,17 @@
+.image-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 30%;
+}
+
+.image-container2 {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 30%;
+}
+
+.container {
+    justify-content:center;
+}
