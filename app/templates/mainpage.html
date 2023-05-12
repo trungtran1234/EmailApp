@@ -16,6 +16,9 @@
                     <li><form action="{{ url_for('sent') }}">
                         <button class="nav-link" type="submit">View sent messages</button>
                     </form></li>
+                    <li><form action="{{ url_for('view_bookmark') }}">
+                        <button class="nav-link" type="submit">View bookmarked</button>
+                    </form></li>
                     <li class ="nav-item"><form action="{{ url_for('todo') }}" method="post"> <!-- call the todo function in the routes.py when the user click the button-->
                         <button class="nav-link" type="submit">To-Do List</button>
                     </form></li>
@@ -43,6 +46,15 @@
         
         <div class="container-fluid">
         <h2>Inbox</h2>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <div class="flashes">
+            {% for message in messages %}
+              <p>{{ message }}</p>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
         <br>
         <form method="post" action="{{ url_for('mainpage') }}">
             <label>Sort by:</label>
@@ -68,6 +80,17 @@
                     <br>
                     <td><a href="{{ url_for('message', message_id=message.id) }}">View Message</a></td>
                     <br>
+                    <td>
+                        {% if message.bookmark %}
+                            <form method="post" action="{{ url_for('unbookmark', message_id=message.id) }}">
+                                <button type="submit">Unbookmark</button>
+                            </form>
+                        {% else %}
+                            <form method="post" action="{{ url_for('bookmark', message_id=message.id) }}">
+                                <button type="submit">Bookmark</button>
+                            </form>
+                        {% endif %}
+                    </td>
                     <br>
                 </tr>
             {% endfor %}
@@ -82,6 +105,17 @@
                     <br>
                     <td><a href="{{ url_for('message', message_id=message.id) }}">View Message</a></td>
                     <br>
+                    <td>
+                        {% if message.bookmark %}
+                            <form method="post" action="{{ url_for('unbookmark', message_id=message.id) }}">
+                                <button type="submit">Unbookmark</button>
+                            </form>
+                        {% else %}
+                            <form method="post" action="{{ url_for('bookmark', message_id=message.id) }}">
+                                <button type="submit">Bookmark</button>
+                            </form>
+                        {% endif %}
+                    </td>
                     <br>
                 </tr>
 

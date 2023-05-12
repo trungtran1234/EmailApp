@@ -272,3 +272,27 @@ def search_results():
     query = request.args.get('query')
     results = Message.query.filter(Message.body.contains(query)).all()
     return render_template('search_results.html', results=results)
+
+@myapp_obj.route('/message/<int:message_id>/bookmark', methods=['POST'])
+@login_required
+def bookmark(message_id):
+    message = Message.query.get(message_id)
+    message.bookmark = True
+    db.session.commit()
+    flash('Message bookmarked!')
+    return redirect(url_for('mainpage'))
+
+@myapp_obj.route('/message/<int:message_id>/unbookmark', methods=['POST'])
+@login_required
+def unbookmark(message_id):
+    message = Message.query.get(message_id)
+    message.bookmark = False
+    db.session.commit()
+    flash('Message unbookmarked!')
+    return redirect(url_for('mainpage'))
+
+@myapp_obj.route('/bookmarked', methods = ['GET'])
+@login_required
+def view_bookmark():
+    bookmarked = Message.query.filter_by(bookmark=True).all()
+    return render_template('bookmarks.html', bookmarked=bookmarked)
