@@ -43,6 +43,15 @@
         
         <div class="container-fluid">
         <h2>Inbox</h2>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <div class="flashes">
+            {% for message in messages %}
+              <p>{{ message }}</p>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
         <br>
         <form method="post" action="{{ url_for('mainpage') }}">
             <label>Sort by:</label>
