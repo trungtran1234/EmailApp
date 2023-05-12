@@ -98,7 +98,7 @@ def changepassword():
             db.session.commit() #saves new password into database
             return redirect(url_for('mainpage')) #take user back to main page
         else:
-            error = "Invalid email"
+            error = "Invalid email" #resets the page when user enters the wrong email
             return render_template('changepassword.html', form=form, error=error)
     return render_template('changepassword.html', form=form, error=error) #if conditions not fulfilled then stay on page
 
@@ -196,9 +196,9 @@ def delete_item(todo_id):
 @myapp_obj.route("/undo/<int:message_id>", methods=['POST'])
 @login_required
 def undo(message_id):
-    last_message = Message.query.get(message_id)
-    db.session.delete(last_message)
-    db.session.commit()
+    last_message = Message.query.get(message_id) #gets message_id
+    db.session.delete(last_message) #deletes the message
+    db.session.commit() #saves changes
     return redirect(url_for('sent'))
 
     
@@ -280,18 +280,18 @@ def search_results():
 
 @myapp_obj.route('/message/<int:message_id>/bookmark', methods=['POST'])
 @login_required
-def bookmark(message_id):
+def bookmark(message_id): #Uses the bookmark boolean to mark it as true
     message = Message.query.get(message_id)
-    message.bookmark = True
+    message.bookmark = True #bookmarked message will now appear in bookmark page
     db.session.commit()
-    flash('Message bookmarked!')
+    flash('Message bookmarked!') 
     return redirect(url_for('mainpage'))
 
 @myapp_obj.route('/message/<int:message_id>/unbookmark', methods=['POST'])
 @login_required
-def unbookmark(message_id):
+def unbookmark(message_id): #bookmark boolean becomes false
     message = Message.query.get(message_id)
-    message.bookmark = False
+    message.bookmark = False #bookmark is deleted from bookmark page
     db.session.commit()
     flash('Message unbookmarked!')
     return redirect(url_for('mainpage'))
@@ -299,7 +299,7 @@ def unbookmark(message_id):
 @myapp_obj.route('/bookmarked', methods = ['GET'])
 @login_required
 def view_bookmark():
-    bookmarked = Message.query.filter_by(bookmark=True).all()
+    bookmarked = Message.query.filter_by(bookmark=True).all() #Only displays messages that have bookmark boolean true
     return render_template('bookmarks.html', bookmarked=bookmarked)
 
 @myapp_obj.route('/view_profile/<string:email>', methods = ['GET'])
