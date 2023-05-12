@@ -1,15 +1,16 @@
 <button class="back-button" onclick="window.history.back()">Back</button>
 
-<h1>Sent Messages</h1>
+<h1>Bookmarks</h1>
+<!--<p>{{ bookmarked_message.content }}</p> !-->
 
-  {% for bookmarked_message in bookmarking %}
+  <!--{% for bookmark in bookmarking %}
     <div class="message">
-      <p><strong>To:</strong> {{ bookmarked_message.recipient.username }}</p>
-      <p><strong>Subject:</strong> {{ bookmarked_message.subject }}</p>
-      <p><strong>Date:</strong> {{ bookmarked_message.timestamp.strftime('%Y-%m-%d %I:%M %p') }}</p>
+      <p><strong>To:</strong> {{ bookmark.recipient.username }}</p>
+      <p><strong>Subject:</strong> {{ bookmark.subject }}</p>
+      <p><strong>Date:</strong> {{ bookmark.timestamp.strftime('%Y-%m-%d %I:%M %p') }}</p>
       <td><a href="{{ url_for('message', message_id=message.id) }}">View Message</a></td>
       <br>
       <br>
     </div>
 
-    {% endfor %}
+    {% endfor %} !-->

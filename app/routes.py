@@ -189,15 +189,21 @@ def undo(message_id):
     db.session.commit()
     return redirect(url_for('sent'))
 
-@myapp_obj.route("/bookmark/<int:message_id>", methods=['GET','POST'])
+@myapp_obj.route("/bookmarking/<int:message_id>", methods=['POST'])
 @login_required
 def bookmarking(message_id):
     bookmarked_message = Message.query.get(message_id)
     db.session.add(bookmarked_message)
     db.session.commit()
-    return render_template('bookmarks.html', bookmarked_messagge=bookmarked_message)
-
-@myapp_obj.route("/bookmark_page")
+    '''
+    bookmarked_message = Message.query.get(message_id)
+    bookmark = Message(content=bookmarked_message.content)
+    db.session.add(bookmark)
+    db.session.commit()
+    return render_template('bookmarks.html', bookmarked_message=bookmark)
+    '''
+    
+@myapp_obj.route("/bookmarks")
 @login_required
 def bookmarks():
      return render_template('bookmarks.html')
