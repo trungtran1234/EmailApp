@@ -4,7 +4,9 @@
     <title>Friend List</title>
   </head>
   <body>
-    <button class="back-button" onclick="window.history.back()">Back</button>
+    <form action="{{ url_for('mainpage') }}">
+      <button type="submit">Back</button>
+  </form>
     <h1>Friend List</h1>
     {% if friends %} 
       <ul>
@@ -15,6 +17,9 @@
             <form action="{{ url_for('delete_friend', id=friend.id) }}" method="post">
               <input type="hidden" name="_method" value="DELETE">
               <button type="submit">Delete</button>
+            </form>
+            <form action="{{ url_for('view_profile', email=friend.email) }}" method="get">
+              <button type="submit">View Profile</button>
             </form>
           </li>
         {% endfor %}
