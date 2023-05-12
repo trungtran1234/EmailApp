@@ -48,6 +48,7 @@ class Message(db.Model):
     subject = db.Column(db.String(100), nullable=False)
     body = db.Column(db.String(500), nullable=False)
     timestamp = db.Column(db.DateTime, default=datetime.now())
+    bookmark = db.Column(db.Boolean, default=False)
 
     sender = db.relationship('User', foreign_keys=[sender_id])
     recipient = db.relationship('User', foreign_keys=[recipient_id])
