@@ -30,11 +30,11 @@
                     <li class ="nav-item"><form action="{{ url_for('profile') }}" method="post">
                         <button class ="nav-link"type="submit">Profile</button> 
                   </form></li> 
-                    <li class ="nav-item"><form action="{{ url_for('logout') }}" method="post">
-                        <button class="nav-link" type="submit">Logout</button>
-                    </form></li>
                     <li><form action="{{ url_for('settings') }}">
                         <button class="nav-link" type="submit">Settings</button>
+                    </form></li>
+                    <li class ="nav-item"><form action="{{ url_for('logout') }}" method="post">
+                        <button class="nav-link" type="submit">Logout</button>
                     </form></li>
                 </ul>
                 <form class="d-flex" action="{{ url_for('search_results') }}" method="get">
@@ -122,5 +122,6 @@
              {% endif %}
         </tbody>
     </div>
+    
     </body>
 </html>

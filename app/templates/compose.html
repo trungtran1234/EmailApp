@@ -4,30 +4,28 @@
     <button class="btn-close" aria-label="Close" type="submit"></button>
   </form>
 
-<div class="image-container" style="float:left;width:35%;border:brown">
+<div class="image-container" style="float:left;width:35%;">
     <img src="https://i.kym-cdn.com/photos/images/newsfeed/002/301/340/1bf.png" alt="Sigma male">
 </div>
 <div class="centered">
     <div class ="form-container">
-<form action="" method="post" novalidates>
-    {{form.hidden_tag()}}
-    <p> {{form.recipient.label}} <br>
-        {{form.recipient(size=30)}}</p>
-    
-    <p> {{form.subject.label}} <br>
-        {{form.subject(size=30)}}</p>
-    
-        <p> {{form.body.label}} <br>
-        {{form.body(rows='10',cols='65')}}
-    </p>
-    
-    {% for error in form.recipient.errors %}
-        {{ error }}
-    {% endfor %}
+        <form action="" method="post" novalidates>
+            {{form.hidden_tag()}}
+            <p> {{form.recipient.label}} <br>
+                {{form.recipient(size=30)}}</p>
+            
+            <p> {{form.subject.label}} <br>
+                {{form.subject(size=30)}}</p>
+            
+                <p> {{form.body.label}} <br>
+                {{form.body(rows='10',cols='65')}}</p>
+            
+            {% for error in form.recipient.errors %}
+                {{ error }}
+            {% endfor %}
 
-
-        <p>{{form.submit(class = "btn btn-secondary")}}</p>
-</form>
+            <p>{{form.submit(class = "btn btn-secondary")}}</p>
+        </form>
     </div>
 </div>
 
