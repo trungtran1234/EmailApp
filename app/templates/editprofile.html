@@ -1,0 +1,23 @@
+<form action="{{ url_for('profile') }}">
+    <button type="submit">Back</button>
+</form>
+<head>
+    <title>Edit Profile</title>
+</head>
+<body>
+    <h1>Edit Profile</h1>
+        <form action = "{{ url_for('updateProfile') }}" method = "post" novalidates>
+        {{ form.hidden_tag() }}
+
+        <p> {{form.name.label}} <br>
+        {{form.name(size=32)}}</p>
+
+       <p>{{form.update1()}}</p>
+
+        <p> {{form.bio.label}} <br>
+        {{form.bio(size=32)}}</p>
+
+       <p>{{form.update2()}}</p> 
+
+        </form>
+</body>

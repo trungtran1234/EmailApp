@@ -1,16 +1,22 @@
-<button class="back-button" onclick="window.history.back()">Back</button>
+<form action="{{ url_for('mainpage') }}">
+  <button type="submit">Back</button>
+</form>
 
-<h1>Bookmarks</h1>
-<!--<p>{{ bookmarked_message.content }}</p> !-->
+<h1>Bookmarked Messages</h1>
 
-  <!--{% for bookmark in bookmarking %}
-    <div class="message">
-      <p><strong>To:</strong> {{ bookmark.recipient.username }}</p>
-      <p><strong>Subject:</strong> {{ bookmark.subject }}</p>
-      <p><strong>Date:</strong> {{ bookmark.timestamp.strftime('%Y-%m-%d %I:%M %p') }}</p>
-      <td><a href="{{ url_for('message', message_id=message.id) }}">View Message</a></td>
-      <br>
-      <br>
-    </div>
-
-    {% endfor %} !-->
+{% for message in bookmarked %}
+<div class="message">
+  <p><strong>To:</strong> {{ message.recipient.username }}</p>
+  <p><strong>Subject:</strong> {{ message.subject }}</p>
+  <p><strong>Date:</strong> {{ message.timestamp.strftime('%Y-%m-%d %I:%M %p') }}</p>
+  <td><a href="{{ url_for('message', message_id=message.id) }}">View Message</a></td>
+  <br>
+  <br>
+</div>
+<div>
+  <span>{{ message.content }}</span>
+  <form method="post" action="{{ url_for('unbookmark', message_id=message.id) }}">
+      <button type="submit">Unbookmark</button>
+  </form>
+</div>
+{% endfor %}

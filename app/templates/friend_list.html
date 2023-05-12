@@ -4,7 +4,9 @@
     <title>Friend List</title>
   </head>
   <body>
-    <button class="back-button" onclick="window.history.back()">Back</button>
+    <form action="{{ url_for('mainpage') }}">
+      <button type="submit">Back</button>
+  </form>
     <h1>Friend List</h1>
     {% if friends %} 
       <ul>

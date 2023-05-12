@@ -159,5 +159,3 @@ The user made the new account and can log in, or the user fails to make the new 
 The emails are now sorted by whatever the user selected
 				OR
 			      There are no emails that were ever sent to the user so no emails will be sorted
-
-	

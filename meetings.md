@@ -41,8 +41,25 @@ message
   - <Jasper> has been working on the search bar and already have the drop down menu for sort and he's plannign on finish up the sort.
   - <Tri> has finished Todo component requirement and planning on completing the relationship for add and delete friend.
 
+- Summarize group progress: We completed login, compose, and create account, delete account, search messages, changing password, and todo component.
+ ### 2022-05-03 at 4:30pm
+- attendance: Trung, Kevin, Jasper, Tri
+- Team updates (15min or less)
+  <Each team member gives an update of what they did from the last meeting and what they plan to do next. If they are stuck, bring it up here to see if others can help.>
+  - <Trung> has been working on fixing the delete account requirement and planning to help other team members.
+  - <Kevin> has finished changing password and planing on the undo and book marking requirement.
+  - <Jasper> has been working on the search bar and already have the drop down menu for sort and he's plannign on finish up the sort.
+  - <Tri> has finished relationship for add and delete friend and planning on implmenting the css for the main page.
 
-- pair-programming (optional) (25 mins)
-  <- Pair program on one part of the project. Driver will be the person responsible for that requirement.>
+- Summarize group progress: We completed login, compose, and create account delete account, search messages, changing password, todo component, add friend, delete friend,  changing password.
+ ### 2022-05-10 at 4:30pm
+- attendance: Trung, Kevin, Jasper, Tri
+- Team updates (15min or less)
+  <Each team member gives an update of what they did from the last meeting and what they plan to do next. If they are stuck, bring it up here to see if others can help.>
+  - <Trung> has finished the delete account and registering account 
+  - <Kevin> has completed 75% of the bookmarking requirement.
+  - <Jasper> Finshed search bar requirement and edit profile requirement
+  - <Tri> has finished implmeneting the css on the main page and login page and help others
 
-- Summarize group progress
+
+- Summarize group progress: We completed login, compose, and create account delete account, search messages, changing password, todo component, add friend, delete friend,  changing password, search messsage, and sort email by date, undo, and start implmenting css

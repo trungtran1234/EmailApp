@@ -1,0 +1,23 @@
+<form action="{{ url_for('mainpage') }}">
+    <button type="submit">Back</button>
+</form>
+{% if results %}
+    <h2>Search Results:</h2>
+    <ul>
+    {% for message in results %}
+    <tr>
+        <time>{{ message.timestamp.strftime('%Y-%m-%d %I:%M %p') }}</time>
+        <br>
+        <td>From: {{ message.sender.username }}</td>
+        <br>
+        <td>Subject: {{ message.subject }}</td>
+        <br>
+        <td><a href="{{ url_for('message', message_id=message.id) }}">View Message</a></td>
+        <br>
+        <br>
+    </tr>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No results found.</p>
+{% endif %}
