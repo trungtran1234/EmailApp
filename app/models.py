@@ -13,7 +13,7 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(100), nullable=False)
     bio = db.Column(db.String(100), nullable = False, default = '')
     name = db.Column(db.String(32), nullable = False, default = '')
-    
+
 
     friends = db.relationship('Friend', backref='user', lazy='dynamic')
 

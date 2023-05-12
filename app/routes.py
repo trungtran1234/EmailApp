@@ -1,5 +1,5 @@
 from datetime import datetime
-from sqlalchemy import or_
+from sqlalchemy import not_, or_
 from app import db
 from glob import escape
 from flask import flash, redirect, render_template, request, url_for
@@ -48,7 +48,7 @@ def register():
             if existing_user.email == form.email.data and existing_user.username == form.username.data:
                 error = 'This username and email is already taken. Please choose a different ones.'
             return render_template('register.html', form=form, error=error) #stay on register page but with error message prompted
-        if '@' not in form.email.data or form.email.data.count('@') > 1:
+        if '@' not in form.email.data or '.' not in form.email.data or form.email.data.count('.') > 1 or form.email.data.count('@') > 1:
             error = 'Invalid email address. Please enter a valid email address.'
             return render_template('register.html', form=form, error=error)
         new_account = User(username=form.username.data, email = form.email.data) #if not an existing user, create new user in database
@@ -203,6 +203,7 @@ def undo(message_id):
 
     
 @myapp_obj.route('/add_friend', methods=['GET', 'POST'])
+@login_required
 def add_friend(): #add friend object based on the email and friend to the database
     if request.method == 'POST':
         name = request.form['name']
@@ -221,7 +222,6 @@ def add_friend(): #add friend object based on the email and friend to the databa
         if existing_friend:
             flash('Friend with email {} already exists.'.format(email))
             return redirect(url_for('friend_list'))
-        
         friend = Friend(name=name, email=email,friend_of=current_user)
         db.session.add(friend)
         db.session.commit()
@@ -231,6 +231,7 @@ def add_friend(): #add friend object based on the email and friend to the databa
     return render_template('add_friend.html')
 
 @myapp_obj.route('/delete_friend/<int:id>', methods=['POST'])
+@login_required
 def delete_friend(id): #delete friend object in the database
     friend = Friend.query.get_or_404(id) #retrieve Friend object based on the primary key id
     db.session.delete(friend) 
@@ -244,16 +245,19 @@ def friend_list(): #display all the friend object in the database
     return render_template('friend_list.html', friends=friends)
 
 @myapp_obj.route('/profile', methods = ['GET', 'POST'])
+@login_required
 def profile(): 
     form = updateForm()
     return render_template('profile.html', form=form)
 
 @myapp_obj.route('/editprofile', methods = ['GET', 'POST'])
+@login_required
 def edit_profile(): 
     form = updateForm()
     return render_template('editprofile.html', form=form)
 
 @myapp_obj.route('/updateprofile', methods=['GET', 'POST'])
+@login_required
 def updateProfile():
     form = updateForm()
     if form.validate_on_submit():
@@ -268,6 +272,7 @@ def updateProfile():
     return render_template('editprofile.html', form=form)
 
 @myapp_obj.route('/search_results', methods=['GET'])
+@login_required
 def search_results():
     query = request.args.get('query')
     results = Message.query.filter(Message.body.contains(query)).all()
