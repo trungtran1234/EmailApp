@@ -1,7 +1,7 @@
+
 <div class="image-container" style="float:left;width:35%;">
     <img src="Downloads/tate.jpeg" alt="tate">
 </div>
-
 
 <div class = "row my-custom-row justidy-content-center align-items-center">
 <div class="container"><h1 class = "text-center p-5 mb-5 mt-5"> Update Profile
@@ -20,20 +20,17 @@ User Profile
     <div class = "container-fluid"></div>
 
     <p>
-        Name: {{ current_user.name }}
+        Name: {{ the_friend.name }}
         <br>
-        Username: {{ current_user.username }}
+        Username: {{ the_friend.username }}
         <br>
-
-        Email: {{ current_user.email }}
+    
+        Email: {{ the_friend.email }}
         <br>
-        Bio: {{ current_user.bio }}
+        Bio: {{ the_friend.bio }}
         <br>
     </p>
 
 
 </body>
-
-<form action="{{ url_for('edit_profile') }}" method="post">
-<button type="submit">Edit Profile</button> 
-</form><br> </center></div></div></div></h1></div>
+<br> </center></div></div></div></h1></div>

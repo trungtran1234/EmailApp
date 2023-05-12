@@ -73,11 +73,9 @@
             {%if sort_by == 'Newest first'%}
             {% for message in des %}
                 <tr>
-                    <time>{{ message.timestamp.strftime('%Y-%m-%d %I:%M %p') }}</time>
-                    <br>
                     <td>From: {{ message.sender.username }}</td>
                     <br>
-                    <td>Subject: {{ message.subject }}</td>
+                    <td>{{ message.subject }}</td>
                     <br>
                     <td><a href="{{ url_for('message', message_id=message.id) }}">View Message</a></td>
                     <br>

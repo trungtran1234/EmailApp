@@ -48,7 +48,7 @@ def register():
             if existing_user.email == form.email.data and existing_user.username == form.username.data:
                 error = 'This username and email is already taken. Please choose a different ones.'
             return render_template('register.html', form=form, error=error) #stay on register page but with error message prompted
-        if '@' not in form.email.data or form.email.data.count('@') > 1:
+        if '@' not in form.email.data or '.' not in form.email.data or form.email.data.count('.') > 1 or form.email.data.count('@') > 1:
             error = 'Invalid email address. Please enter a valid email address.'
             return render_template('register.html', form=form, error=error)
         new_account = User(username=form.username.data, email = form.email.data) #if not an existing user, create new user in database
@@ -301,3 +301,10 @@ def unbookmark(message_id):
 def view_bookmark():
     bookmarked = Message.query.filter_by(bookmark=True).all()
     return render_template('bookmarks.html', bookmarked=bookmarked)
+
+@myapp_obj.route('/view_profile/<string:email>', methods = ['GET'])
+@login_required
+def view_profile(email):
+    the_friend = User.query.filter_by(email=email).first()
+    return render_template('friend_profile.html', the_friend=the_friend)
+    
