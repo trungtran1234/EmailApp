@@ -300,4 +300,4 @@ def unbookmark(message_id):
 @login_required
 def view_bookmark():
     bookmarked = Message.query.filter_by(bookmark=True).all()
-    return render_template('bookmarked.html', bookmarked=bookmarked)
+    return render_template('bookmarks.html', bookmarked=bookmarked)
