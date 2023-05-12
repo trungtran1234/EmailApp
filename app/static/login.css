@@ -7,3 +7,7 @@
   width: 360px;	
   box-shadow: 0px 0px 24px #5C5696;
 }
+
+.box {
+  background-image: url(../img/dog.JPG);
+}
