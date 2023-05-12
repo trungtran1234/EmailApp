@@ -296,3 +296,10 @@ def unbookmark(message_id):
 def view_bookmark():
     bookmarked = Message.query.filter_by(bookmark=True).all()
     return render_template('bookmarks.html', bookmarked=bookmarked)
+
+@myapp_obj.route('/view_profile/<string:email>', methods = ['GET'])
+@login_required
+def view_profile(email):
+    the_friend = User.query.filter_by(email=email).first()
+    return render_template('friend_profile.html', the_friend=the_friend)
+    
