@@ -7,7 +7,7 @@
     <body>
         
         <h1>Welcome to S-Mail, {{ name }}</h1>
-
+        <!--Nav bar-->
         <nav class="navbar bg-body-tertiary">
             <div class="container-fluid">
                 <ul class="nav nav-tabs">
@@ -20,7 +20,7 @@
                     <li><form action="{{ url_for('view_bookmark') }}">
                         <button class="nav-link" type="submit">View bookmarked</button>
                     </form></li>
-                    <li class ="nav-item"><form action="{{ url_for('todo') }}" method="post"> <!-- call the todo function in the routes.py when the user click the button-->
+                    <li class ="nav-item"><form action="{{ url_for('todo') }}" method="post"> 
                         <button class="nav-link" type="submit">To-Do List</button>
                     </form></li>
                     
@@ -65,8 +65,9 @@
             {% endfor %}
           </div>
         {% endif %}
-      {% endwith %}
+        {% endwith %}
         <br>
+        <!--Sorting Section-->
         <form method="post" action="{{ url_for('mainpage') }}">
             <label>Sort by:</label>
             <select name = "sort">
@@ -76,7 +77,7 @@
         </select>
             <button class="btn btn-primary" type="submit">Sort</button>
         </form>
-        
+        <!--incomming messages-->
         Sorted by: {{ sort_by }}
         <br><br>
         <tbody>
