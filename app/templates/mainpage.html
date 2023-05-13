@@ -37,6 +37,16 @@
                         <button class="nav-link" type="submit">Logout</button>
                     </form></li>
                 </ul>
+                <form method="get" action="{{ url_for('search_results') }}">
+                    <select class="btn btn-outline-success" name="search_by">
+                      <option value="" selected="selected">Search By: All</option>
+                      <option class = "btn btn-light" value="Body">Search By: Body</option>
+                      <option class = "btn btn-light" value="Subject">Search By: Subject</option>
+                      <option class = "btn btn-light" value="Username">Search By: Username</option>
+                    </select>
+                  </form>
+
+
                 <form class="d-flex" action="{{ url_for('search_results') }}" method="get">
                     <input class="form-control me-2" type="text" name="query" id="search_query" placeholder="Search messages ..." aria-label="Search">
                     <button class="btn btn-outline-success" type="submit">Search</button>
