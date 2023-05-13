@@ -275,7 +275,15 @@ def updateProfile():
 @login_required
 def search_results():
     query = request.args.get('query')
-    results = Message.query.filter(Message.body.contains(query)).all()
+    search_by = request.args.get("search_by")
+    if search_by == "Body":    
+        results = Message.query.filter(Message.body.contains(query)).all()        
+    elif search_by == "Subject":
+        results = Message.query.filter(Message.subject.contains(query)).all()        
+    elif search_by == "Username":
+        results = Message.query.filter(Message.sender.has(User.username.contains(query))).all()       
+    else:
+        results = Message.query.filter(Message.body.contains(query) | Message.sender.has(User.username.contains(query)) | Message.subject.contains(query)).all()
     return render_template('search_results.html', results=results)
 
 @myapp_obj.route('/message/<int:message_id>/bookmark', methods=['POST'])
