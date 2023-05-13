@@ -37,19 +37,21 @@
                         <button class="nav-link" type="submit">Logout</button>
                     </form></li>
                 </ul>
-                <form method="get" action="{{ url_for('search_results') }}">
-                    <select class="btn btn-outline-success" name="search_by">
+                
+
+                <form class="d-flex" action="{{ url_for('search_results') }}" method="get">
+                    <input class="form-control me-2" type="text" name="query" id="search_query" placeholder="Search messages ..." aria-label="Search">
+                    <div class = "search">
+                    <form method="get" action="{{ url_for('search_results') }}">
+                    <select class="btn btn-outline-success" name="search_by"> <!--drop down menu for search-->
                       <option value="" selected="selected">Search By: All</option>
                       <option class = "btn btn-light" value="Body">Search By: Body</option>
                       <option class = "btn btn-light" value="Subject">Search By: Subject</option>
                       <option class = "btn btn-light" value="Username">Search By: Username</option>
                     </select>
-                  </form>
-
-
-                <form class="d-flex" action="{{ url_for('search_results') }}" method="get">
-                    <input class="form-control me-2" type="text" name="query" id="search_query" placeholder="Search messages ..." aria-label="Search">
+                </div>
                     <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
                 </form>
             </div>
           </nav>
@@ -57,7 +59,7 @@
         
         <div class="container-fluid">
         <h2>Inbox</h2>
-        {% with messages = get_flashed_messages() %}
+        {% with messages = get_flashed_messages() %} <!--flash message when bookmarked or unbookmarked-->
         {% if messages %}
           <div class="flashes">
             {% for message in messages %}
@@ -70,14 +72,14 @@
         <!--Sorting Section-->
         <form method="post" action="{{ url_for('mainpage') }}">
             <label>Sort by:</label>
-            <select name = "sort">
-            <option value="" selected="selectd" hidden="hidden">Choose here</option>
-            <option value="Newest first">Newest first</option>
-            <option value="Oldest first">Oldest first</option>
-        </select>
+            <select class = "btn btn-outline-primary" name = "sort">
+                <option class = "btn btn-light" value="" selected="selectd" hidden="hidden">Choose here</option>
+                <option class = "btn btn-light" value="Newest first">Newest first</option>
+                <option class = "btn btn-light" value="Oldest first">Oldest first</option>
+            </select>
             <button class="btn btn-primary" type="submit">Sort</button>
         </form>
-        <!--incomming messages-->
+        <!--incomming messages based on sort order-->
         Sorted by: {{ sort_by }}
         <br><br>
         <tbody>
@@ -93,11 +95,11 @@
                     <td>
                         {% if message.bookmark %}
                             <form method="post" action="{{ url_for('unbookmark', message_id=message.id) }}">
-                                <button type="submit">Unbookmark</button>
+                                <button class="btn btn-outline-success" type="submit">Unbookmark</button>
                             </form>
                         {% else %}
                             <form method="post" action="{{ url_for('bookmark', message_id=message.id) }}">
-                                <button type="submit">Bookmark</button>
+                                <button class="btn btn-outline-sucess" type="submit">Bookmark</button>
                             </form>
                         {% endif %}
                     </td>
@@ -118,11 +120,11 @@
                     <td>
                         {% if message.bookmark %}
                             <form method="post" action="{{ url_for('unbookmark', message_id=message.id) }}">
-                                <button type="submit">Unbookmark</button>
+                                <button class="btn btn-outline-success" type="submit">Unbookmark</button>
                             </form>
                         {% else %}
                             <form method="post" action="{{ url_for('bookmark', message_id=message.id) }}">
-                                <button type="submit">Bookmark</button>
+                                <button class="btn btn-outline-success" type="submit">Bookmark</button>
                             </form>
                         {% endif %}
                     </td>

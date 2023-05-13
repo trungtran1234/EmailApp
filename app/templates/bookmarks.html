@@ -1,7 +1,6 @@
-<form action="{{ url_for('mainpage') }}">
-  <button type="submit">Back</button>
+<form action="{{ url_for('mainpage') }}"> <!--a button that redirects to the 'mainpage' route when clicked.-->
+  <button class="btn-close" aria-label="Close" type="submit"></button>
 </form>
-
 <h2>Bookmarked Messages</h2>
 <br>
 <link rel="stylesheet" href="{{ url_for('static', filename='mainpage.css') }}"> <!--Uses css style in mainpage.css-->
@@ -20,8 +19,11 @@
 </div>
 <div>
   <span>{{ message.content }}</span>
+  <div class = "bookmarker">
   <form method="post" action="{{ url_for('unbookmark', message_id=message.id) }}"> <!--Uses the unbookmark function in routes.py-->
-      <button type="submit">Unbookmark</button> <!--Removes bookmark from the page -->
+      <button class="btn btn-outline-success" type="submit">Unbookmark</button> <!--Removes bookmark from the page -->
   </form>
+  </div>
 </div>
+<br>
 {% endfor %}

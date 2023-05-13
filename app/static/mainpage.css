@@ -31,3 +31,15 @@ h1{
 .friend {
     font-size:20px;
 }
+
+.search {
+    margin-right: 10px;
+}
+
+.message {
+    margin-left: 20px;
+}
+
+.bookmarker {
+    margin-left: 20px;
+}

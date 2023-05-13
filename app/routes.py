@@ -67,8 +67,6 @@ def mainpage():
     des = Message.query.filter_by(recipient=current_user).order_by(Message.timestamp.desc()).all()
     #renders the main page with messages and name filled in as the parameter in mainpage.html
 
-   
-
     return render_template('mainpage.html', sort_by=sort_by, des=des, asc=asc,name=current_user.username)
 
 #logout
@@ -246,19 +244,19 @@ def friend_list(): #display all the friend object in the database
 
 @myapp_obj.route('/profile', methods = ['GET', 'POST'])
 @login_required
-def profile(): 
+def profile(): #route to go to profile page
     form = updateForm()
     return render_template('profile.html', form=form)
 
 @myapp_obj.route('/editprofile', methods = ['GET', 'POST'])
 @login_required
-def edit_profile(): 
+def edit_profile(): #route to go to edit profile page
     form = updateForm()
     return render_template('editprofile.html', form=form)
 
 @myapp_obj.route('/updateprofile', methods=['GET', 'POST'])
 @login_required
-def updateProfile():
+def updateProfile(): #update profile with inputted name or bio
     form = updateForm()
     if form.validate_on_submit():
         user = User.query.get(current_user.id)
@@ -275,7 +273,7 @@ def updateProfile():
 @login_required
 def search_results():
     query = request.args.get('query')
-    search_by = request.args.get("search_by")
+    search_by = request.args.get("search_by") #search results based on drop down request
     if search_by == "Body":    
         results = Message.query.filter(Message.body.contains(query)).all()        
     elif search_by == "Subject":
@@ -312,7 +310,7 @@ def view_bookmark():
 
 @myapp_obj.route('/view_profile/<string:email>', methods = ['GET'])
 @login_required
-def view_profile(email):
-    the_friend = User.query.filter_by(email=email).first()
+def view_profile(email): #view friend's profile
+    the_friend = User.query.filter_by(email=email).first() #filter by email
     return render_template('friend_profile.html', the_friend=the_friend)
     
