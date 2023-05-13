@@ -274,6 +274,8 @@ def updateProfile(): #update profile with inputted name or bio
 def search_results():
     query = request.args.get('query')
     search_by = request.args.get("search_by") #search results based on drop down request
+    if not query:  # if query is empty
+        return render_template('search_results.html', results=[])
     if search_by == "Body":    
         results = Message.query.filter(Message.body.contains(query)).all()        
     elif search_by == "Subject":
@@ -305,7 +307,7 @@ def unbookmark(message_id): #bookmark boolean becomes false
 @myapp_obj.route('/bookmarked', methods = ['GET'])
 @login_required
 def view_bookmark():
-    bookmarked = Message.query.filter_by(bookmark=True).all() #Only displays messages that have bookmark boolean true
+    bookmarked = Message.query.filter_by(bookmark=True, recipient_id=current_user.id).all() #Only displays messages that have bookmark boolean true
     return render_template('bookmarks.html', bookmarked=bookmarked)
 
 @myapp_obj.route('/view_profile/<string:email>', methods = ['GET'])
