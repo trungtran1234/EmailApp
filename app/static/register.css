@@ -1,3 +1,4 @@
+/*Class center with form-container amkes the form centered*/
 .centered {
     display: flex;
     justify-content: center;
@@ -15,6 +16,7 @@
     margin: 0 auto;
 }
 
+/* Style for image*/
 .image-container {
     height: 100vh;
 }
