@@ -17,7 +17,7 @@ User should be able to:
 
 ## Non-functional Requirements
 
-1. Messages should have font Arial in size 12
+1. Messages should have font Arial in minimum size of 12
 2. Compatible with Google Chrome, Safari, Microsoft Edge, Opera, and 
 Firefox
 
@@ -63,9 +63,10 @@ The user is able to update a task as done or undone, and delete a task
 - Pre-conditions: The user must be logged in
 - Trigger: The user clicks the search bar
 - Primary Sequence:  
-1. User types in key words that may be contained in the title, sender, subject, or body of the message
+1. User types in key words that may be contained in the sender, subject, or body of the message
+2. User selects the drop down next to the search button and pick their desired search type
+3. User click the search button
 2. A list of received messages with a match appear
-3. User selects the message they are looking for
 - Alternative Sequence:
 User entered key words that yielded no results. Message saying “Not found” shows up
 - Post-Condition: 

@@ -244,19 +244,19 @@ def friend_list(): #display all the friend object in the database
 
 @myapp_obj.route('/profile', methods = ['GET', 'POST'])
 @login_required
-def profile(): 
+def profile(): #route to go to profile page
     form = updateForm()
     return render_template('profile.html', form=form)
 
 @myapp_obj.route('/editprofile', methods = ['GET', 'POST'])
 @login_required
-def edit_profile(): 
+def edit_profile(): #route to go to edit profile page
     form = updateForm()
     return render_template('editprofile.html', form=form)
 
 @myapp_obj.route('/updateprofile', methods=['GET', 'POST'])
 @login_required
-def updateProfile():
+def updateProfile(): #update profile with inputted name or bio
     form = updateForm()
     if form.validate_on_submit():
         user = User.query.get(current_user.id)
@@ -273,8 +273,16 @@ def updateProfile():
 @login_required
 def search_results():
     query = request.args.get('query')
-
-    return render_template('search_results.html', results=result)
+    search_by = request.args.get("search_by") #search results based on drop down request
+    if search_by == "Body":    
+        results = Message.query.filter(Message.body.contains(query)).all()        
+    elif search_by == "Subject":
+        results = Message.query.filter(Message.subject.contains(query)).all()        
+    elif search_by == "Username":
+        results = Message.query.filter(Message.sender.has(User.username.contains(query))).all()       
+    else:
+        results = Message.query.filter(Message.body.contains(query) | Message.sender.has(User.username.contains(query)) | Message.subject.contains(query)).all()
+    return render_template('search_results.html', results=results)
 
 @myapp_obj.route('/message/<int:message_id>/bookmark', methods=['POST'])
 @login_required
@@ -302,7 +310,7 @@ def view_bookmark():
 
 @myapp_obj.route('/view_profile/<string:email>', methods = ['GET'])
 @login_required
-def view_profile(email):
-    the_friend = User.query.filter_by(email=email).first()
+def view_profile(email): #view friend's profile
+    the_friend = User.query.filter_by(email=email).first() #filter by email
     return render_template('friend_profile.html', the_friend=the_friend)
     
