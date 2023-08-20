@@ -1,4 +1,4 @@
-# Sigma Mail (S-mail)
+# S-mail
 ## Contributors
 - Tri Nguyen - ngtri1809
 - Jasper Nguyen - jasper-nguyen
@@ -6,7 +6,7 @@
 - Trung Tran - trungtran1234
 
 ## Introduction
-Sigma Mail is a modern, web-based email application that allows registered users to manage their emails online. With features like composing email and todo list, this app makes it easy to stay on top of your email game. Built with python, html, and css, Sigma mail is a reliable and efficient way to manage your emails from anywhere with an internet connection.
+S-Mail is a modern, web-based email application that allows registered users to manage their emails online. With features like composing email and todo list, this app makes it easy to stay on top of your email game. Built with python, html, and css, Sigma mail is a reliable and efficient way to manage your emails from anywhere with an internet connection.
 
 ## Installation  
 1. Clone the repository:   
@@ -51,4 +51,4 @@ In the terminal, press ctrl + C and it will end the program
 - Tri Nguyen - Implemented todo list, and add or remove friend from friends list 
 - Jasper Nguyen - Implemented sort messages by date, search bar with drop down function, edit profile, and user profile
 - Kevin Aquino - Implemented change password, Undo button, and bookmarking function
-- Trung Tran - Implemented compose,login,logout,register,delete account
+- Trung Tran - Implemented compose,login, logout, register, delete account
