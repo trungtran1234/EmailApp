@@ -9,14 +9,9 @@ from app.models import Message, User, Todo, Friend
 from .forms import ComposeForm, LoginForm, RegisterForm, ChangePasswordForm, updateForm
 from app import myapp_obj
 
-# the front page of the website, uses "base.html" for the format
-# have login and create account buttons
-@myapp_obj.route("/")
-def front():
-    return render_template('base.html')
 
 # login page
-@myapp_obj.route("/login", methods=['GET', 'POST']) #uses GET and POST method to request or send data to the database
+@myapp_obj.route("/", methods=['GET', 'POST']) #uses GET and POST method to request or send data to the database
 def login():
     form = LoginForm() #login form - includes username and password fields
     error = None  

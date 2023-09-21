@@ -1,4 +1,25 @@
-p {
-  border : solid;
-  
+
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+}
+
+h1 {
+  text-align: center;
+}
+.centered {
+  text-align: left;
+}
+
+.form-container {
+  max-width: 600px;
+  padding: 20px;
+  border: 2px solid #2c2f37;
+  border-radius: 5px;
+  background-color: #fff;
 }

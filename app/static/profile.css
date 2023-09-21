@@ -1,0 +1,19 @@
+body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+h2 {
+    text-align: center;
+}
+
+.profile-info {
+    font-size: large;
+    margin-top: 30px;
+    margin-left: 50px;
+}
+
+.btn {
+    margin-left: 50px;
+}
