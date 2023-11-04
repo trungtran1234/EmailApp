@@ -175,7 +175,7 @@ def delete():
     db.session.delete(current_user) #delete user from database
     db.session.commit() #commit the changes
     logout_user()
-    return redirect(url_for('front')) #go back to front page
+    return redirect(url_for('login')) #go back to front page
 
 #delete todo task
 @myapp_obj.route("/delete_item/<int:todo_id>", methods=['GET'])
