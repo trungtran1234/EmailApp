@@ -1,4 +1,6 @@
 # S-mail
+<img width="956" alt="image" src="https://github.com/trungtran1234/EmailApp/assets/48637790/9fd5bcf6-66fe-4f4f-b1b3-d3d5439765f6">
+
 ## Contributors
 - Tri Nguyen - ngtri1809
 - Jasper Nguyen - jasper-nguyen
